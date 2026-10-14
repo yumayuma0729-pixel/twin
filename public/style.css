@@ -37,14 +37,15 @@ header .menu-button{color:inherit}@media(max-width:767px){.category-tile h2{font
 .chips button[data-category=commercial]:not([data-category=all]):before{background-image:url('/images/search-commercial.png')}
 .chips button[data-category=passenger]:not([data-category=all]):before{background-image:url('/images/search-passenger.png')}
 .chips button[data-category=all]:before{line-height:61px}
-/* Orange surfaces; the brand statement keeps its warm beige background. */
-:root{--brand-orange:#ff6600;--orange-light:#fff0e4;--orange-border:#edc7a9}
-.price,.column,.detail-soft{background:var(--brand-orange);color:#15232b}
-.price-intro p,.price-intro .eyebrow,.column-intro,.column>.title-row .eyebrow,.detail-soft>p{color:#25313a}
-.price-intro .text-link{border-color:#15232b80}.column>.title-row .all-stock{color:#15232b}
-.price-board{background:white}.board-options span{background:var(--orange-light);border-color:#e4b795}.board-total{border-color:#ff6600}.board-label{color:#b14300}.board-top{background:#17262e}
-.stock-empty-state,.detail-notice,.column-toc,.detail-card-grid article,.story-list-empty,.article-support+.article-note{background:var(--orange-light)}
-.stock-empty-state,.story-list-empty{border-color:var(--orange-border)}.detail-card-grid article{border-top-color:var(--brand-orange)}.detail-notice{border-left-color:var(--brand-orange)}
-.detail-soft .detail-steps li{border-color:#15232b55}.detail-soft .detail-steps li:before,.detail-soft .detail-steps p{color:#25313a}.column-breadcrumb,.detail-breadcrumb{background:#fff3e9}
-.detail-content .eyebrow,.column-category{color:#a53e00}.price-board>p,.board-disclaimer{color:#666}.detail-soft .detail-notice{background:#fff6ef}.detail-soft .text-link{border-color:#15232b70}.statement{background:#f4f1eb}
+/* Blue surfaces with white text; the statement retains beige. */
+:root{--brand-blue:#1754a5;--blue-light:#edf4fd;--blue-border:#b9cfee}
+.price,.column,.detail-soft{background:var(--brand-blue);color:#fff}
+.price-intro h2,.price-intro p,.price-intro .eyebrow,.price-intro .text-link,.column>.title-row h2,.column-intro,.column>.title-row .eyebrow,.column>.title-row .all-stock,.column-index>h1,.column-index>.eyebrow,.detail-soft>h2,.detail-soft>p,.detail-soft>.eyebrow,.detail-soft .detail-steps h3,.detail-soft .detail-steps p,.detail-soft .detail-steps li:before,.detail-soft>.text-link,.detail-soft>.detail-service-links a{color:#fff}
+.price-intro .text-link,.detail-soft>.text-link,.detail-soft>.detail-service-links a{border-color:#ffffff80}
+.price-board,.column-card{background:white;color:#15232b}
+.board-options span{background:var(--blue-light);border-color:var(--blue-border)}.board-total{border-color:var(--brand-blue)}.board-label{color:var(--brand-blue)}.board-top{background:#17262e}
+.stock-empty-state,.detail-notice,.column-toc,.detail-card-grid article,.story-list-empty,.article-support+.article-note{background:var(--blue-light);color:#15232b}
+.stock-empty-state,.story-list-empty{border-color:var(--blue-border)}.detail-card-grid article{border-top-color:var(--brand-blue)}.detail-notice{border-left-color:var(--brand-blue)}
+.detail-soft .detail-steps li{border-color:#ffffff55}.column-breadcrumb,.detail-breadcrumb{background:#edf4fd}
+.detail-content .eyebrow,.column-category{color:#1754a5}.price-board>p,.board-disclaimer{color:#666}.detail-soft .detail-notice{background:var(--blue-light);color:#25313a}.statement{background:#f4f1eb}
 @media(max-width:767px){.chips button[data-category]:not([data-category=all]):before{width:min(72px,100%);height:48px}.chips button[data-category=all]:before{line-height:48px}}
