@@ -94,3 +94,14 @@ header,.detail-header{background:#101719e8}footer,.closing,.detail-consult{backg
 .about-image{background:linear-gradient(90deg,#172bbcfa,#1735c8a6),url('/images/lifestyle-concept.png') center/cover}
 @media(max-width:767px){.strengths-stacked .honeycomb-six{max-width:390px}.honeycomb-six .hex-inner{gap:6px;padding:5px}.honeycomb-six .hex-inner strong{font-size:14px;letter-spacing:0}.honeycomb-six .hex-road .hex-inner strong,.honeycomb-six .hex-wash .hex-inner strong{font-size:11px}.honeycomb-six .hex-en{font-size:5px;letter-spacing:0}.honeycomb-six .hex-arrow{font-size:11px}.honeycomb-six .hex-core{padding:8px}.honeycomb-six .hex-inner .wash-coming{font-size:6px}.strengths-scroll-rail nav{gap:5px}.strengths-scroll-rail nav a{gap:3px;font-size:10px}.strengths-scroll-rail nav small{font-size:7px}}
 @media(prefers-reduced-motion:reduce){.honeycomb-six .hex-node{transition:none}}
+/* Reference layout: two above, one on each side, two below. */
+.strengths-stacked .honeycomb-six{aspect-ratio:1.06;max-width:540px}
+.honeycomb-six .hex-node{width:31%;height:38%;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.honeycomb-six .hex-buy{left:51%;top:1%;right:auto;bottom:auto}
+.honeycomb-six .hex-sell{left:67%;top:31%;right:auto;bottom:auto}
+.honeycomb-six .hex-inspection{left:51%;top:61%;right:auto;bottom:auto}
+.honeycomb-six .hex-maintenance{left:18%;top:61%;right:auto;bottom:auto}
+.honeycomb-six .hex-road{left:2%;top:31%;right:auto;bottom:auto}
+.honeycomb-six .hex-wash{left:18%;top:1%;right:auto;bottom:auto}
+.honeycomb-six .hex-core{left:34.5%;top:31%;width:31%;height:38%;background:none;clip-path:none;padding:12px}
+@media(max-width:767px){.strengths-stacked .honeycomb-six{max-width:390px}.honeycomb-six .hex-core{padding:8px}}
