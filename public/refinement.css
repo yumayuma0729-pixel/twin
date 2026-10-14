@@ -56,3 +56,41 @@ header,.detail-header{background:#101719e8}footer,.closing,.detail-consult{backg
 .strengths-stacked .strengths-bottom-cta{max-width:320px;min-height:50px;padding:14px 18px;font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){.honeycomb-five .hex-node,.strengths-stacked .strengths-bottom-cta{transition:none}}
+/* Six services: paper white, fine grey outlines and a clear cobalt accent. */
+:root{--brand-blue:#2445ed;--blue-light:#eff2ff;--blue-border:#c6cff7}
+.strengths-stacked{background:#fff;color:#17191d;border-color:#e9e9e9}
+.strengths-stacked .strengths-copy h2>span{color:var(--brand-blue)}
+.strengths-stacked .strengths-copy>.eyebrow{color:#777d85}
+.strengths-stacked .strengths-copy>.strengths-summary{color:#72767e}
+.strengths-stacked .honeycomb-six{width:100%;max-width:530px;aspect-ratio:.9;margin:0 auto;position:relative;isolation:isolate}
+.honeycomb-six .hex-node{width:29.5%;height:30.7%;background:#d1d2d5;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);color:#191b20;filter:none;transition:background .2s}
+.honeycomb-six .hex-node:before{inset:1px;background:#fff;clip-path:inherit}
+.honeycomb-six .hex-buy{left:35.25%;top:3.55%;right:auto;bottom:auto}
+.honeycomb-six .hex-sell{left:61.25%;top:19.15%;right:auto;bottom:auto}
+.honeycomb-six .hex-inspection{left:61.25%;top:50.35%;right:auto;bottom:auto}
+.honeycomb-six .hex-maintenance{left:35.25%;top:65.95%;right:auto;bottom:auto}
+.honeycomb-six .hex-road{left:9.25%;top:50.35%;right:auto;bottom:auto}
+.honeycomb-six .hex-wash{left:9.25%;top:19.15%;right:auto;bottom:auto}
+.honeycomb-six .hex-core{left:35.25%;top:34.75%;width:29.5%;height:30.7%;background:none;clip-path:none;filter:none;padding:13px;z-index:3}
+.honeycomb-six .hex-core:before{display:none}.honeycomb-six .hex-core img{width:100%;height:100%;object-fit:contain}.honeycomb-six .hex-core:hover{filter:brightness(.88)}.honeycomb-six .hex-core:focus-visible{outline:2px solid var(--brand-blue);outline-offset:0}
+.honeycomb-six .hex-inner{gap:9px;transform:none!important;padding:8px}
+.honeycomb-six .hex-inner strong{font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',Meiryo,sans-serif;font-size:18px;font-weight:500;line-height:1.5;letter-spacing:.025em}
+.honeycomb-six .hex-road .hex-inner strong{font-size:15px}.honeycomb-six .hex-wash .hex-inner strong{font-size:15px}
+.honeycomb-six .hex-en{color:#94969d;font-size:8px;letter-spacing:.07em}
+.honeycomb-six .hex-arrow{font-size:14px;color:#80848d}
+.honeycomb-six .hex-inner small{display:none}.honeycomb-six .hex-inner .wash-coming{display:block;font-size:8px;line-height:1.3;color:#777f92}
+.honeycomb-six .hex-node:hover,.honeycomb-six .hex-node:focus-visible{background:var(--brand-blue);filter:none;opacity:1}
+.honeycomb-six .hex-node:hover:before,.honeycomb-six .hex-node:focus-visible:before{background:var(--brand-blue)}
+.honeycomb-six .hex-node:hover .hex-inner>*,.honeycomb-six .hex-node:focus-visible .hex-inner>*{color:#fff}
+.strengths-stacked .strengths-bottom-cta{background:var(--brand-blue);border-color:var(--brand-blue);color:white}
+.strengths-stacked .strengths-bottom-cta:hover{background:#1935c7;border-color:#1935c7}
+.price,.detail-soft,.detail-consult,.closing{background:var(--brand-blue);color:white}
+.price-intro .eyebrow,.price-intro p,.price-intro h2,.price-intro .text-link,.detail-consult p,.detail-consult>.eyebrow,.detail-consult>small,.closing .eyebrow,.closing p{color:#fff}
+.board-label,.column-category,.detail-content .eyebrow{color:var(--brand-blue)}.board-total{border-color:var(--brand-blue)}
+.detail-hero:not(.strengths-page-hero){background:var(--brand-blue);background-image:none}.detail-hero .eyebrow,.detail-hero-sign{color:#e5eaff}
+.strengths-editorial .strengths-page-hero .eyebrow,.strengths-editorial .strengths-page-hero h1,.strengths-editorial-intro>.eyebrow,.strengths-editorial .strength-detail-number,.strengths-editorial .scroll-strength.is-active .strength-detail-number,.strength-editorial-title{color:var(--brand-blue)}
+.strengths-scroll-rail nav a[aria-current=step],.rail-current{color:var(--brand-blue)}.strengths-scroll-rail nav a[aria-current=step]:before,.strengths-editorial .scroll-strength.is-active:before{background:var(--brand-blue);border-color:var(--brand-blue)}
+.strengths-editorial .scroll-strength .strengths-link{color:var(--brand-blue)}.strengths-editorial .scroll-strength .wash-coming-detail{color:var(--brand-blue);border:1px solid #bdc7ed;display:inline-block;padding:5px 10px}.strengths-editorial .scroll-strength .wash-plan-note{font-size:11px;margin-top:15px;color:#737b87}
+.about-image{background:linear-gradient(90deg,#172bbcfa,#1735c8a6),url('/images/lifestyle-concept.png') center/cover}
+@media(max-width:767px){.strengths-stacked .honeycomb-six{max-width:390px}.honeycomb-six .hex-inner{gap:6px;padding:5px}.honeycomb-six .hex-inner strong{font-size:14px;letter-spacing:0}.honeycomb-six .hex-road .hex-inner strong,.honeycomb-six .hex-wash .hex-inner strong{font-size:11px}.honeycomb-six .hex-en{font-size:5px;letter-spacing:0}.honeycomb-six .hex-arrow{font-size:11px}.honeycomb-six .hex-core{padding:8px}.honeycomb-six .hex-inner .wash-coming{font-size:6px}.strengths-scroll-rail nav{gap:5px}.strengths-scroll-rail nav a{gap:3px;font-size:10px}.strengths-scroll-rail nav small{font-size:7px}}
+@media(prefers-reduced-motion:reduce){.honeycomb-six .hex-node{transition:none}}
