@@ -105,3 +105,16 @@ header,.detail-header{background:#101719e8}footer,.closing,.detail-consult{backg
 .honeycomb-six .hex-wash{left:18%;top:1%;right:auto;bottom:auto}
 .honeycomb-six .hex-core{left:34.5%;top:31%;width:31%;height:38%;background:none;clip-path:none;padding:12px}
 @media(max-width:767px){.strengths-stacked .honeycomb-six{max-width:390px}.honeycomb-six .hex-core{padding:8px}}
+/* Requested photo and type refinements. */
+@font-face{font-family:'Caveat';src:url('/fonts/Caveat.ttf') format('truetype');font-style:normal;font-weight:400 700;font-display:swap}
+.hero .hero-sign{font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:33px;font-weight:500;line-height:1.35;letter-spacing:.015em;color:#fff3da;margin-top:18px;transform:rotate(-3deg);transform-origin:left center;text-shadow:0 1px 9px #0004}
+.honeycomb-six .hex-node,.honeycomb-six .hex-node:before{background:var(--brand-blue);color:#fff}
+.honeycomb-six .hex-inner>*,.honeycomb-six .hex-inner .wash-coming{color:#fff}
+.honeycomb-six .hex-node:hover,.honeycomb-six .hex-node:focus-visible,.honeycomb-six .hex-node:hover:before,.honeycomb-six .hex-node:focus-visible:before{background:#1735c8}
+.honeycomb-six .hex-node:focus-visible{outline:0;box-shadow:inset 0 0 0 4px #fff}
+.about{background:#25251f;min-height:390px;padding-top:43px;padding-bottom:43px}
+.about-image{background:linear-gradient(90deg,#121810dd 0%,#161b16a6 48%,#161b1635 100%),url('/images/family-interior.png') 65% center/cover no-repeat}
+.about-photo-caption{position:absolute!important;bottom:10px;right:18px;color:#e4e5df;font-size:7px;letter-spacing:.025em;background:#1b211b77;padding:3px 6px;z-index:1;line-height:1.6}
+.about h2,.about p,.about .eyebrow,.about .related .tiny,.about .related h3,.about-company-link{color:#fff}
+.about-columns{gap:30px}.about .related{border-color:#ffffff40}
+@media(max-width:767px){.hero .hero-sign{font-size:30px;margin-top:20px;line-height:1.3}.about{padding-top:32px;padding-bottom:40px;min-height:460px}.about-image{background:linear-gradient(90deg,#121810e8 0%,#161b16ad 62%,#161b1655 100%),url('/images/family-interior.png') 66% center/cover no-repeat}.about h2{font-size:27px}.about-photo-caption{font-size:6px;right:12px;bottom:8px}}
