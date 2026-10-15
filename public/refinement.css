@@ -133,3 +133,8 @@ header,.detail-header{background:#101518ed;color:white}.menu{background:#161b1ef
 footer{background:#10181c;color:#d5dedf}
 .strengths-editorial .strengths-page-hero h1,.strengths-editorial .strengths-page-hero .eyebrow,.strengths-editorial-intro>.eyebrow,.strengths-editorial .strength-detail-number,.strengths-editorial .scroll-strength.is-active .strength-detail-number,.strength-editorial-title,.rail-current,.strengths-scroll-rail nav a[aria-current=step]{color:#29373e}.strengths-scroll-rail nav a[aria-current=step]:before,.strengths-editorial .scroll-strength.is-active:before{background:#29373e;border-color:#29373e}.strengths-editorial .scroll-strength .strengths-link,.strengths-editorial .scroll-strength .wash-coming-detail{color:#354b55}.strengths-editorial .strengths-principle{background:#e8eeeb}
 @media(max-width:767px){.about-image{background-image:linear-gradient(90deg,#111810e8 0%,#171e17ad 62%,#161b1655 100%),url('/images/family-interior.png')}}
+/* Keep the supplied mark prominent in the exact center of the six services. */
+.strengths-stacked .honeycomb-six .hex-core{left:33.5%;top:30%;width:33%;height:40%;padding:0;background:transparent;clip-path:none;display:grid;place-items:center;filter:none}
+.strengths-stacked .honeycomb-six .hex-core:before{display:none}
+.strengths-stacked .honeycomb-six .hex-core img{display:block;width:100%;height:100%;max-width:none;object-fit:contain;filter:drop-shadow(0 1px 1px #00000020)}
+.strengths-stacked .honeycomb-six .hex-core:focus-visible{outline:2px solid #6c777c;outline-offset:2px}
