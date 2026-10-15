@@ -1,0 +1,2 @@
+const photoDialog=document.querySelector('#vehicle-photo-dialog');
+if(photoDialog){document.querySelectorAll('[data-photo-open]').forEach(button=>button.addEventListener('click',()=>photoDialog.showModal()));photoDialog.querySelector('.photo-dialog-close').addEventListener('click',()=>photoDialog.close());photoDialog.addEventListener('click',event=>{if(event.target===photoDialog){const r=photoDialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)photoDialog.close();}});}
