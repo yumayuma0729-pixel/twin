@@ -43,7 +43,18 @@
         "label": "内装｜後席・荷室",
         "isGenerated": true
       }
-    ]
+    ],
+    "equipment": {
+      "navigation": true,
+      "camera": true,
+      "smart_key": true,
+      "bluetooth": true,
+      "etc": true,
+      "led": true,
+      "safety": true,
+      "power_door": true,
+      "aircon": true
+    }
   },
   {
     "slug": "demo-kei-02",
@@ -89,7 +100,18 @@
         "label": "内装｜後席・荷室",
         "isGenerated": true
       }
-    ]
+    ],
+    "equipment": {
+      "navigation": false,
+      "camera": true,
+      "smart_key": false,
+      "bluetooth": true,
+      "etc": true,
+      "led": false,
+      "safety": true,
+      "power_door": false,
+      "aircon": true
+    }
   },
   {
     "slug": "demo-commercial-01",
@@ -135,7 +157,18 @@
         "label": "内装｜後席・荷室",
         "isGenerated": true
       }
-    ]
+    ],
+    "equipment": {
+      "navigation": true,
+      "camera": true,
+      "smart_key": false,
+      "bluetooth": true,
+      "etc": true,
+      "led": false,
+      "safety": true,
+      "power_door": false,
+      "aircon": true
+    }
   },
   {
     "slug": "demo-commercial-02",
@@ -181,7 +214,18 @@
         "label": "内装｜後席・荷室",
         "isGenerated": true
       }
-    ]
+    ],
+    "equipment": {
+      "navigation": false,
+      "camera": true,
+      "smart_key": false,
+      "bluetooth": false,
+      "etc": true,
+      "led": false,
+      "safety": false,
+      "power_door": false,
+      "aircon": true
+    }
   },
   {
     "slug": "demo-passenger-01",
@@ -227,7 +271,18 @@
         "label": "内装｜後席・荷室",
         "isGenerated": true
       }
-    ]
+    ],
+    "equipment": {
+      "navigation": true,
+      "camera": true,
+      "smart_key": true,
+      "bluetooth": true,
+      "etc": true,
+      "led": true,
+      "safety": true,
+      "power_door": false,
+      "aircon": true
+    }
   },
   {
     "slug": "demo-passenger-02",
@@ -273,6 +328,17 @@
         "label": "内装｜後席・荷室",
         "isGenerated": true
       }
-    ]
+    ],
+    "equipment": {
+      "navigation": true,
+      "camera": true,
+      "smart_key": true,
+      "bluetooth": true,
+      "etc": false,
+      "led": true,
+      "safety": true,
+      "power_door": false,
+      "aircon": true
+    }
   }
 ]
