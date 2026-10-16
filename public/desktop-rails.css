@@ -22,3 +22,40 @@ body.has-desktop-rails{background:#111719;padding-bottom:0}
 @media(min-width:1600px){:root{--desktop-left:220px;--desktop-right:360px}.desktop-contact-rail{padding:32px 25px}.desktop-brand-rail{padding:40px 25px 30px}.rail-brand img{width:110px;height:110px}.rail-brand>span{font-size:20px}.rail-brand small{font-size:8px}.rail-brand-message{font-size:12px}.rail-service-nav a{font-size:12px;padding:14px 0}.desktop-contact-rail h2{font-size:29px}.rail-contact-actions strong{font-size:15px}.rail-contact-actions>button{min-height:82px}.rail-form-panel{padding:20px}.has-desktop-rails header nav{display:flex}}
 @media(prefers-reduced-motion:reduce){.rail-contact-actions>button{transition:none}}
 @media(min-width:1024px){.rail-phone .rail-channel-icon{color:#e6eeeb}}
+/* Graphite and brushed-silver consultation rail. */
+@media(min-width:1024px){
+.desktop-contact-rail{background:radial-gradient(ellipse at 130% 0%,#454b4f55,transparent 55%),linear-gradient(155deg,#25292c 0%,#15181b 60%,#1e2225);border-left:1px solid #6e73774d;color:#f0f1f2;scrollbar-color:#687075 #1b1e21}
+.desktop-contact-rail .rail-contact-inner>.rail-eyebrow{color:#9da5aa}.desktop-contact-rail h2{color:#f4f4f3}.rail-contact-intro{color:#acb3b7}.rail-contact-foot{color:#929a9f}
+.rail-form-panel{background:linear-gradient(135deg,#f2f3f3,#e2e5e6);border:1px solid #b1b7bb;color:#252b30;box-shadow:0 10px 35px #0002}.rail-form-heading{border-color:#bec5c9}.rail-form-heading>span{color:#707b82}.rail-preview-note{color:#68737a}.rail-form-panel label:not(.rail-consent)>span{color:#6e7b83}.rail-form-panel input:not([type=checkbox]),.rail-form-panel select,.rail-form-panel textarea{background:#fafbfb;border-color:#b5bec3;color:#283138}.rail-form-panel input::placeholder,.rail-form-panel textarea::placeholder{color:#7f8a91}.rail-consent>span{color:#53616a}.rail-review-button{background:#242b30}.rail-full-form{color:#52616b}.rail-form-panel #rail-vehicle-context{background:#d7dde0;color:#44545e}#rail-confirm-list dt{color:#687781}#rail-confirm-list dd{color:#26343c}.rail-send-disabled{background:#cdd3d7;color:#596970;border-color:#aeb8be}
+.rail-phone{background:linear-gradient(120deg,#384148,#20272d);border:1px solid #75828b!important}.rail-phone .rail-channel-icon{color:#e8edf0}.rail-phone small{color:#b8c4cb}
+/* Direct feedback, without distracting movement while reading. */
+.rail-contact-actions>button,.rail-review-button{position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,filter .25s ease}
+.rail-contact-actions>button:before,.rail-review-button:before{content:'';position:absolute;inset:-80% -50%;background:linear-gradient(110deg,transparent 40%,#ffffff24 50%,transparent 60%);transform:translateX(-90%);transition:transform .65s ease;pointer-events:none}
+.rail-contact-actions>button:is(:hover,:focus-visible),.rail-review-button:is(:hover,:focus-visible){transform:translateY(-3px);box-shadow:0 8px 18px #0003;filter:brightness(1.05)}
+.rail-contact-actions>button:is(:hover,:focus-visible):before,.rail-review-button:is(:hover,:focus-visible):before{transform:translateX(90%)}
+.rail-contact-actions>button>span:last-child,.rail-review-button>span{display:inline-block;transition:transform .25s ease}
+.rail-contact-actions>button:is(:hover,:focus-visible)>span:last-child{transform:translate(3px,-3px)}.rail-review-button:is(:hover,:focus-visible)>span{transform:translateX(4px)}
+.rail-contact-actions>button:active,.rail-review-button:active{transform:translateY(0);box-shadow:none}
+.rail-full-form{transition:letter-spacing .25s,color .25s}.rail-full-form:hover{letter-spacing:.05em;color:#11191e}
+#rail-confirmation:not([hidden]){animation:rail-review-in .3s ease-out}
+.desktop-contact-rail .rail-contact-inner{animation:rail-review-in .5s ease-out both}
+}
+@media(min-width:1280px){
+.desktop-brand-rail{background:radial-gradient(ellipse at -100% 30%,#414b4f35,transparent 70%),#111619}.rail-brand-message{color:#98a5ad}.rail-brand small{color:#8c9ba4}.rail-service-nav a{position:relative;isolation:isolate;transition:color .25s ease,padding-left .25s ease,border-color .25s ease}.rail-service-nav a:after{content:'';position:absolute;inset:0 -7px;background:linear-gradient(90deg,#aabac11a,transparent);transform:scaleX(0);transform-origin:left center;transition:transform .3s ease;z-index:-1}.rail-service-nav a:is(:hover,:focus-visible){color:#fff;padding-left:7px;border-color:#9eafb8;opacity:1}.rail-service-nav a:is(:hover,:focus-visible):after{transform:scaleX(1)}.rail-service-nav a>i{transition:transform .25s,color .25s}.rail-service-nav a:is(:hover,:focus-visible)>i{transform:translate(2px,-2px);color:#e5eef4}.rail-brand img{transition:filter .35s,transform .35s}.rail-brand:hover img{filter:brightness(1.2);transform:translateY(-3px)}.rail-brand-foot a{transition:color .25s,transform .25s}.rail-brand-foot a:hover{color:#fff;transform:translateX(4px)}
+}
+@keyframes rail-review-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* Quiet road-like arcs continue the statement section's visual language. */
+.has-desktop-rails main>.inventory{background-color:#f8f9f8;background-image:radial-gradient(ellipse 650px 460px at 110% 12%,transparent calc(100% - 1px),#aeb9bd4d 100%,transparent calc(100% + 1px)),radial-gradient(ellipse 650px 460px at 110% 12%,transparent calc(92% - 1px),#aeb9bd26 92%,transparent calc(92% + 1px)),linear-gradient(150deg,#fff0 60%,#d9dfe333)}
+.has-desktop-rails main>.story{background-color:#fafbf9;background-image:radial-gradient(ellipse 450px 600px at -10% 80%,transparent calc(100% - 1px),#adb8bd55 100%,transparent calc(100% + 1px)),linear-gradient(125deg,transparent 49.8%,#bfc8cd18 50%,transparent 50.2%)}
+.has-desktop-rails main>.faq{background-color:#f4f6f5;background-image:radial-gradient(ellipse 600px 500px at 120% 10%,transparent calc(100% - 1px),#a9b6bc55 100%,transparent calc(100% + 1px)),radial-gradient(ellipse 600px 500px at 120% 10%,transparent calc(95% - 1px),#a9b6bc26 95%,transparent calc(95% + 1px))}
+.has-desktop-rails main>.column{background-color:#e8ebec;background-image:linear-gradient(120deg,#ffffff65,transparent 65%),radial-gradient(ellipse 700px 700px at 95% 135%,transparent calc(100% - 1px),#95a3ab55 100%,transparent calc(100% + 1px)),radial-gradient(ellipse 700px 700px at 95% 135%,transparent calc(94% - 1px),#95a3ab33 94%,transparent calc(94% + 1px))}
+.has-desktop-rails .business-intro,.has-desktop-rails .road-content-section{background-image:radial-gradient(ellipse 580px 600px at 115% 50%,transparent calc(100% - 1px),#a9b6bc40 100%,transparent calc(100% + 1px))}
+.has-desktop-rails .business-care{background-image:radial-gradient(ellipse 580px 700px at -15% 85%,transparent calc(100% - 1px),#a9b6bc50 100%,transparent calc(100% + 1px))}
+.has-desktop-rails .closing{background-image:radial-gradient(ellipse 750px 480px at 110% 110%,transparent calc(100% - 1px),#acbdc233 100%,transparent calc(100% + 1px)),linear-gradient(145deg,#202a2f,#12181c)}
+@media(max-width:767px){.has-desktop-rails main>.inventory,.has-desktop-rails main>.story,.has-desktop-rails main>.faq,.has-desktop-rails main>.column{background-size:100% 100%;background-repeat:no-repeat}}
+@media(prefers-reduced-motion:reduce){
+.desktop-contact-rail .rail-contact-inner,#rail-confirmation:not([hidden]){animation:none}
+.rail-contact-actions>button,.rail-contact-actions>button:before,.rail-contact-actions>button>span:last-child,.rail-review-button,.rail-review-button:before,.rail-review-button>span,.rail-full-form,.rail-service-nav a,.rail-service-nav a:after,.rail-service-nav a>i,.rail-brand img,.rail-brand-foot a{transition:none!important}
+.rail-contact-actions>button:is(:hover,:focus-visible),.rail-review-button:is(:hover,:focus-visible),.rail-contact-actions>button:is(:hover,:focus-visible)>span:last-child,.rail-review-button:is(:hover,:focus-visible)>span,.rail-brand:hover img,.rail-brand-foot a:hover,.rail-service-nav a:is(:hover,:focus-visible)>i{transform:none}
+.rail-contact-actions>button:before,.rail-review-button:before{display:none}
+}
