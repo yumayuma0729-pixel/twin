@@ -69,3 +69,24 @@
 .home-vehicle-grid .vehicle-card-more{font-size:7px;margin-top:7px}
 .home-vehicle-grid .vehicle-card-more>span{font-size:13px}
 }
+/* Mobile stock rail: two readable cards and a glimpse of the next one. */
+@media(max-width:767px){
+.home-vehicle-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:44%;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:1px;padding:1px 1px 12px;margin-right:-20px;padding-right:20px;scrollbar-width:thin;scrollbar-color:#92999d #e9eceb;-webkit-overflow-scrolling:touch}
+.home-vehicle-grid .vehicle-card:nth-child(n){display:block;scroll-snap-align:start}
+.home-vehicle-grid .vehicle-card-link{aspect-ratio:auto;height:100%}
+.home-vehicle-grid .vehicle-card-image{aspect-ratio:1.5;padding:23px 7px 13px}
+.home-vehicle-grid .vehicle-demo-tag{font-size:6px;left:5px;right:auto;top:6px;padding:3px 4px}
+.home-vehicle-grid .vehicle-image-note{font-size:6px;right:5px;bottom:4px}
+.home-vehicle-grid .vehicle-card-body{padding:11px 10px}
+.home-vehicle-grid .vehicle-category{font-size:9px;padding:2px 5px}
+.home-vehicle-grid .vehicle-card h3{font-size:12px;line-height:1.6;min-height:3.2em;margin:8px 0}
+.home-vehicle-grid .vehicle-mini-spec{font-size:10px;line-height:1.6;margin:0 0 9px}
+.home-vehicle-grid .vehicle-mini-spec>div{gap:5px;margin:2px 0}
+.home-vehicle-grid .vehicle-card-price{padding-top:9px;margin-top:auto}
+.home-vehicle-grid .vehicle-card-price>span{font-size:9px;margin-bottom:4px}
+.home-vehicle-grid .vehicle-card-price>strong{font-size:28px}
+.home-vehicle-grid .vehicle-card-price small{font-size:10px}
+.home-vehicle-grid .vehicle-card-more{font-size:10px;margin-top:9px;min-height:22px}
+.home-vehicle-grid .vehicle-card-more>span{font-size:18px}
+.home-vehicle-grid:focus-visible{outline:2px solid #555;outline-offset:4px}
+}
