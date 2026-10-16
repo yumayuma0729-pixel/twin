@@ -1,0 +1,64 @@
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: twin
+      MARIADB_USER: twin
+      MARIADB_PASSWORD: ${TWIN_DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${TWIN_DB_ROOT_PASSWORD}
+    volumes:
+      - twin_database:/var/lib/mysql
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      TWIN_ENV: development
+      TWIN_BASE_URL: http://127.0.0.1:8080
+      TWIN_DB_DSN: mysql:host=db;dbname=twin;charset=utf8mb4
+      TWIN_DB_USER: twin
+      TWIN_DB_PASSWORD: ${TWIN_DB_PASSWORD}
+      TWIN_SITE_ROOT: /srv/site
+      TWIN_MEDIA_ROOT: /srv/twin/storage/media
+      TWIN_AUTH_KEY: ${TWIN_AUTH_KEY}
+      TWIN_INDEXING_ENABLED: "0"
+      TWIN_INQUIRIES_ENABLED: "0"
+    volumes:
+      - ./php.ini:/usr/local/etc/php/conf.d/twin.ini:ro
+      - ..:/srv/twin
+      - ../../public:/srv/site:ro
+    depends_on:
+      db:
+        condition: service_healthy
+  app-test:
+    profiles: [test]
+    image: twin-cms-app
+    working_dir: /srv/twin
+    command: [php, -S, "0.0.0.0:8080", -t, public, router.php]
+    ports:
+      - "127.0.0.1:8081:8080"
+    environment:
+      TWIN_ENV: development
+      TWIN_BASE_URL: http://127.0.0.1:8081
+      TWIN_DB_DSN: mysql:host=db;dbname=twin;charset=utf8mb4
+      TWIN_DB_USER: twin
+      TWIN_DB_PASSWORD: ${TWIN_DB_PASSWORD}
+      TWIN_AUTH_KEY: ${TWIN_AUTH_KEY}
+      TWIN_SITE_ROOT: /srv/site
+      TWIN_MEDIA_ROOT: /srv/twin/storage/media
+      TWIN_INDEXING_ENABLED: "1"
+      TWIN_INQUIRIES_ENABLED: "1"
+    volumes:
+      - ./php.ini:/usr/local/etc/php/conf.d/twin.ini:ro
+      - ..:/srv/twin
+      - ../../public:/srv/site:ro
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  twin_database:

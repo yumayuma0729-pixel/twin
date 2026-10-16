@@ -1,6 +1,6 @@
 // Desktop forms stay in this document: no personal information in URLs or storage.
 const railForm=document.querySelector('#rail-inquiry-form');
-if(railForm){
+if(railForm&&railForm.dataset.serverProcessing!=='1'){
  const fields=railForm.querySelector('fieldset');
  const review=document.querySelector('#rail-confirmation');
  const summary=document.querySelector('#rail-confirm-list');
@@ -26,3 +26,5 @@ for(const link of document.querySelectorAll('.rail-service-nav a')){
  const url=new URL(link.href);
  if(location.pathname===url.pathname||(url.pathname==='/stock/'&&location.pathname.startsWith('/stock/')))link.setAttribute('aria-current','page');
 }
+
+if(railForm?.dataset.serverProcessing==='1'){const params=new URLSearchParams(location.search);const type=railForm.querySelector('[name=type]');if([...type.options].some(o=>o.value===params.get('type')))type.value=params.get('type');if(Number(railForm.querySelector('[name=vehicle_id]')?.value)>0)type.value='vehicle';}

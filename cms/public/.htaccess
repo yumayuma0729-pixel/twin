@@ -1,0 +1,12 @@
+Options -Indexes
+DirectoryIndex index.php index.html
+RewriteEngine On
+# Dynamic CMS routes take precedence over old static index.html directories.
+RewriteRule ^(admin(?:/.*)?|media/[0-9]+/?|stock(?:/.*)?|story(?:/.*)?|news(?:/.*)?|column(?:/.*)?|contact(?:/.*)?|sitemap\.xml|robots\.txt)$ index.php [L,QSA]
+RewriteRule ^$ index.php [L,QSA]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L,QSA]
+<FilesMatch "\.(env|sql|log|bak|ini)$">
+  Require all denied
+</FilesMatch>

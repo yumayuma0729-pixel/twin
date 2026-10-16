@@ -1,0 +1,8 @@
+# Local CMS configuration, credentials, runtime and private backups
+cms/config/local.php
+cms/dev/.env
+cms/storage/*
+!cms/storage/.gitkeep
+*.sql.gz
+.env
+/dist/
