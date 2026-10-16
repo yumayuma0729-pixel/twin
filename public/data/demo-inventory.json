@@ -13,7 +13,37 @@
     "description": "日常の移動や家族のお出かけを想定した、軽ハイトワゴンの表示サンプルです。",
     "order": 0,
     "isDemo": true,
-    "availability": "not-for-sale"
+    "availability": "not-for-sale",
+    "gallery": [
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 0,
+        "column": 0,
+        "label": "外装｜フロント",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 0,
+        "column": 1,
+        "label": "外装｜リア",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 0,
+        "column": 2,
+        "label": "内装｜運転席",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 0,
+        "column": 3,
+        "label": "内装｜後席・荷室",
+        "isGenerated": true
+      }
+    ]
   },
   {
     "slug": "demo-kei-02",
@@ -29,7 +59,37 @@
     "description": "予算や走行距離を比べるための、軽自動車の表示サンプルです。",
     "order": 1,
     "isDemo": true,
-    "availability": "not-for-sale"
+    "availability": "not-for-sale",
+    "gallery": [
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 0,
+        "column": 0,
+        "label": "外装｜フロント",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 0,
+        "column": 1,
+        "label": "外装｜リア",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 0,
+        "column": 2,
+        "label": "内装｜運転席",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 0,
+        "column": 3,
+        "label": "内装｜後席・荷室",
+        "isGenerated": true
+      }
+    ]
   },
   {
     "slug": "demo-commercial-01",
@@ -45,7 +105,37 @@
     "description": "荷物を運ぶ仕事を想定した、軽バンタイプの表示サンプルです。",
     "order": 2,
     "isDemo": true,
-    "availability": "not-for-sale"
+    "availability": "not-for-sale",
+    "gallery": [
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 1,
+        "column": 0,
+        "label": "外装｜フロント",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 1,
+        "column": 1,
+        "label": "外装｜リア",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 1,
+        "column": 2,
+        "label": "内装｜運転席",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 1,
+        "column": 3,
+        "label": "内装｜後席・荷室",
+        "isGenerated": true
+      }
+    ]
   },
   {
     "slug": "demo-commercial-02",
@@ -61,7 +151,37 @@
     "description": "現場や配送などの用途を想定した、軽トラックタイプの表示サンプルです。",
     "order": 3,
     "isDemo": true,
-    "availability": "not-for-sale"
+    "availability": "not-for-sale",
+    "gallery": [
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 2,
+        "column": 0,
+        "label": "外装｜フロント",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 2,
+        "column": 1,
+        "label": "外装｜リア",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 2,
+        "column": 2,
+        "label": "内装｜運転席",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 2,
+        "column": 3,
+        "label": "内装｜後席・荷室",
+        "isGenerated": true
+      }
+    ]
   },
   {
     "slug": "demo-passenger-01",
@@ -77,7 +197,37 @@
     "description": "通勤からお出かけまでの用途を想定した、コンパクトカーの表示サンプルです。",
     "order": 4,
     "isDemo": true,
-    "availability": "not-for-sale"
+    "availability": "not-for-sale",
+    "gallery": [
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 3,
+        "column": 0,
+        "label": "外装｜フロント",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 3,
+        "column": 1,
+        "label": "外装｜リア",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 3,
+        "column": 2,
+        "label": "内装｜運転席",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 3,
+        "column": 3,
+        "label": "内装｜後席・荷室",
+        "isGenerated": true
+      }
+    ]
   },
   {
     "slug": "demo-passenger-02",
@@ -93,6 +243,36 @@
     "description": "年式や予算の違いを比べるための、乗用車の表示サンプルです。",
     "order": 5,
     "isDemo": true,
-    "availability": "not-for-sale"
+    "availability": "not-for-sale",
+    "gallery": [
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 3,
+        "column": 0,
+        "label": "外装｜フロント",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 3,
+        "column": 1,
+        "label": "外装｜リア",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 3,
+        "column": 2,
+        "label": "内装｜運転席",
+        "isGenerated": true
+      },
+      {
+        "image": "demo-vehicle-views.png",
+        "row": 3,
+        "column": 3,
+        "label": "内装｜後席・荷室",
+        "isGenerated": true
+      }
+    ]
   }
 ]
