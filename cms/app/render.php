@@ -1,9 +1,13 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/equipment.php';
-function render_shell(string $title,string $description,string $body,string $canonicalPath,bool $index=false,?array $structured=null): void {
+function render_shell(string $title,string $description,string $body,string $canonicalPath,bool $index=false,?array $structured=null,?array $keywordTags=null): void {
  $source=file_get_contents(site_root().'/company/index.html');$source=preg_replace('#<script type="application/ld\+json" data-discovery>.*?</script>#s','',$source);$start=strpos($source,'<main');$end=strpos($source,'</main>',$start)+7;
  $source=substr($source,0,$start).'<main id="main" class="cms-public-main">'.$body.'</main>'.substr($source,$end);
+ // Always emit page-specific metadata, rather than inheriting company-page keywords.
+ if($keywordTags===null){$keywordTags=[];$metadataFile=site_root().'/'.trim($canonicalPath,'/').'/index.html';if(is_file($metadataFile)&&preg_match('/<meta name="keywords" content="([^"]*)">/',file_get_contents($metadataFile),$matches))$keywordTags=array_filter(array_map('trim',explode(',',html_entity_decode($matches[1],ENT_QUOTES,'UTF-8'))));}
+ $source=preg_replace('/<meta name="keywords" content="[^"]*">/','',$source);
+ if($keywordTags)$source=str_replace('</head>','<meta name="keywords" content="'.e(implode(', ',$keywordTags)).'"></head>',$source);
  $source=preg_replace_callback('#<title>.*?</title>#s',fn()=>'<title>'.e($title).' | Twin Assist</title>',$source,1);
  $source=preg_replace_callback('#<meta name="description" content="[^"]*">#',fn()=>'<meta name="description" content="'.e($description).'">',$source,1);
  $source=preg_replace('#<meta name="robots" content="[^"]*">#','<meta name="robots" content="'.($index?'index,follow':'noindex,follow').'">',$source,1);
@@ -43,7 +47,7 @@ function render_content(array $row,bool $preview=false): void {
  $entities[]=['@type'=>'BreadcrumbList','itemListElement'=>[['@type'=>'ListItem','position'=>1,'name'=>'ホーム','item'=>base_url().'/'],['@type'=>'ListItem','position'=>2,'name'=>$d['title'],'item'=>base_url().content_url($row)]]];
  $faq=paired_lines($d['faq_text']??'',8);if($faq)$entities[]=['@type'=>'FAQPage','mainEntity'=>array_map(fn($pair)=>['@type'=>'Question','name'=>$pair[0],'acceptedAnswer'=>['@type'=>'Answer','text'=>$pair[1]]],$faq)];
  $structured=$preview?null:['@context'=>'https://schema.org','@graph'=>$entities];
- render_shell($d['seo_title']?:$d['title'],$d['description'],$body,content_url($row),!$preview&&publishable_index($d),$structured);
+ render_shell($d['seo_title']?:$d['title'],$d['description'],$body,content_url($row),!$preview&&publishable_index($d),$structured,effective_tags($d,$row['type']));
 }
 
 function live_sidebar(string $html): string {
