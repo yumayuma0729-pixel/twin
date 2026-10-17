@@ -39,9 +39,9 @@ function validate_discovery(array $d): void {
  paired_lines($d['faq_text'],8);paired_lines($d['sources_text'],10,true);
  if($d['reviewed_on']!==''){$date=DateTimeImmutable::createFromFormat('!Y-m-d',$d['reviewed_on']);if(!$date||$date->format('Y-m-d')!==$d['reviewed_on']||$d['reviewed_on']>date('Y-m-d'))throw new InvalidArgumentException('確認日は実際に内容を確認した、今日以前の日付を入力してください。');}
 }
+// Tags remain editable metadata and power related-content matching, without a public tag cloud.
 function topic_block(array $tags,bool $region=false,string $type='column'): string {
- if(!$tags)return '';$prefix=['vehicle'=>'stock','story'=>'story','news'=>'news','column'=>'column'][$type];$html='<section class="content-topics" aria-label="関連キーワード"><h2>このページのテーマ</h2><div>';foreach($tags as $tag)$html.='<a href="/'.$prefix.'/?tag='.rawurlencode($tag).'">'.e($tag).'</a>';
- return $html.'</div>'.($region?'<p>大正区の方向けの情報テーマです。店舗所在地・出動可能エリアを示すものではありません。</p>':'').'</section>';
+ return '';
 }
 function answer_blocks(array $d): string {
  $html='';if(!empty($d['answer_summary']))$html.='<section class="cms-answer-summary"><h2>このページの要点</h2><p>'.nl2br(e($d['answer_summary'])).'</p></section>';

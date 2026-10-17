@@ -28,8 +28,8 @@ for file in root.rglob('*.html'):
  if not tags:continue
  s=file.read_text();s=re.sub(r'<!-- contextual-topics:start -->.*?<!-- contextual-topics:end -->','',s,flags=re.S)
  base=list(dict.fromkeys(tags));tags=base+['大正','大正区','大阪市大正区']+['大正区 '+t for t in base[:2]]+['大正 '+t for t in base[:2]]
- block='<!-- contextual-topics:start --><section class="content-topics static-content-topics" aria-label="関連キーワード"><h2>このページのテーマ</h2><div>'+''.join('<span>'+html.escape(t)+'</span>' for t in tags)+'</div><p>大正区の方向けの情報テーマです。店舗所在地・出動可能エリアを示すものではありません。</p></section><!-- contextual-topics:end -->'
- s=s.replace('</main>',block+'</main>',1)
+ s=re.sub(r'<meta name="keywords" content="[^"]*">','',s)
+ s=s.replace('</head>','<meta name="keywords" content="'+html.escape(', '.join(tags),quote=True)+'"></head>',1)
  # Breadcrumb and editorial entities use only information visible in the actual page.
  s=re.sub(r'<script type="application/ld\+json" data-discovery>.*?</script>','',s,flags=re.S)
  title=re.search(r'<h1[^>]*>(.*?)</h1>',s,re.S)
