@@ -69,3 +69,8 @@ footer .legal-footer-links{display:flex;flex-wrap:wrap;gap:9px 20px;width:100%;p
 @media(max-width:767px){#services.strengths-atmosphere .hex-en{display:none}.honeycomb-six .hex-inner{gap:5px}#services.strengths-atmosphere .hex-inner strong{font-size:14px}#services.strengths-atmosphere .hex-road .hex-inner strong,#services.strengths-atmosphere .hex-wash .hex-inner strong{font-size:12px}.contact-field input,.contact-field select,.contact-field textarea{font-size:16px}.home-vehicle-grid .vehicle-demo-tag{font-size:11px;line-height:1.4}.home-vehicle-grid .vehicle-card-image{padding-top:38px}.home-vehicle-grid .vehicle-card h3{min-height:3.2em}.home-vehicle-grid .vehicle-mini-spec{line-height:1.8}}
 
 @media(max-width:767px){#services.strengths-atmosphere .strengths-copy>.strengths-summary{max-width:none}}
+/* Angular silver wordmark, drawn as vectors for consistent brand lettering. */
+header .logo .brand-wordmark{display:block;width:244px;max-width:100%;height:auto;object-fit:contain}
+@media(min-width:1280px){.rail-brand .rail-wordmark{width:166px;height:auto;margin-top:16px;object-fit:contain}.rail-brand .rail-wordmark:hover{transform:none;filter:none}}
+@media(max-width:767px){header .logo .brand-wordmark{width:208px}header .logo{max-width:calc(100% - 85px)}}
+@media(max-width:374px){header .logo .brand-wordmark{width:176px}}
