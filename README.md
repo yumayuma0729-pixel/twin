@@ -101,3 +101,11 @@ TOPの車種ボタン/カードは、そのカテゴリの条件が入った在�
 [CMS設置手順](docs/CMS_Deployment.md) / [CMS操作マニュアル](docs/CMS_Manual.md)
 
 統合検証： `node tests/cms-integration.cjs`（localhostの検証環境とGit外のテストアカウント情報が必要。本番では実行しない）。通常開発とは別の `app-test` profileで受付・検索対象を有効にした検証を行います。予約公開、MFA、CSV出力、WYSIWYG、一般ページ/会社設定のGUI編集は初期版の対象外です。
+
+### 装備・タグ・SEO/AIOの拡張
+
+装備は6分類65項目の三状態（未確認/あり/なし）です。共通カタログは `public/data/cms-catalog.json`。CMSは手動タグと、タイトルを優先した本文等の自動タグを重複排除して24件まで表示。地域は「大正区の方向け」で所在地・対応範囲の断定ではありません。関連タグから記事一覧の絞り込みと関連記事の補完を行い、タグ絞り込みはnoindexです。
+
+要点・確認ポイント・FAQ・参考資料・内容確認日を編集でき、表示内容と一致するArticle/BreadcrumbList/FAQPageを生成します。AI引用やインデックス・順位を保証する機能ではありません。開発中のnoindex・サイトマップ対象制御は維持します。既存ページのタグ等は `scripts/refresh-static-topics.py` で更新。本番前は `--base-url` を正式URLへ合わせて再生成してください。
+
+追加検証：`tests/cms-discovery.php`（PHP環境）、`tests/cms-discovery-ui.cjs`（localhostテスト環境・非公開のテストアカウントが必要）。

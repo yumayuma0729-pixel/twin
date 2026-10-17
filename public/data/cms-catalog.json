@@ -1,0 +1,222 @@
+{
+  "equipment_groups": {
+    "ナビ・オーディオ": {
+      "navigation": "ナビ",
+      "camera": "バックカメラ",
+      "around_view": "全周囲カメラ",
+      "bluetooth": "Bluetooth",
+      "etc": "ETC",
+      "etc2": "ETC2.0",
+      "carplay": "Apple CarPlay",
+      "android_auto": "Android Auto",
+      "display_audio": "ディスプレイオーディオ",
+      "tv": "テレビ",
+      "usb": "USB接続",
+      "cd": "CD再生",
+      "dvd": "DVD再生",
+      "rear_monitor": "後席モニター"
+    },
+    "安全・運転支援": {
+      "safety": "衝突軽減ブレーキ",
+      "abs": "ABS",
+      "esc": "横滑り防止",
+      "airbag_driver": "運転席エアバッグ",
+      "airbag_passenger": "助手席エアバッグ",
+      "side_airbags": "サイドエアバッグ",
+      "lane_assist": "車線逸脱警報・支援",
+      "parking_sensors": "駐車センサー",
+      "adaptive_cruise": "追従クルーズコントロール",
+      "cruise": "クルーズコントロール",
+      "blind_spot": "後側方車両検知",
+      "pedal_safety": "踏み間違い抑制",
+      "hill_start": "坂道発進補助",
+      "dashcam": "ドライブレコーダー"
+    },
+    "快適・内装": {
+      "aircon": "エアコン",
+      "auto_aircon": "オートエアコン",
+      "rear_aircon": "後席エアコン",
+      "power_steering": "パワーステアリング",
+      "power_windows": "パワーウィンドウ",
+      "seat_heater": "シートヒーター",
+      "power_seat": "パワーシート",
+      "leather_seats": "革シート",
+      "heated_steering": "ステアリングヒーター",
+      "isofix": "ISOFIX",
+      "third_row": "3列シート",
+      "folding_seats": "可倒式後席"
+    },
+    "キー・ドア": {
+      "smart_key": "スマートキー",
+      "keyless": "キーレス",
+      "push_start": "プッシュスタート",
+      "power_door": "電動スライドドア",
+      "dual_power_door": "両側電動スライドドア",
+      "power_tailgate": "電動リアゲート",
+      "auto_mirrors": "電動格納ミラー"
+    },
+    "外装・ライト": {
+      "led": "LEDライト",
+      "hid": "HIDライト",
+      "auto_lights": "オートライト",
+      "fog_lights": "フォグランプ",
+      "alloy_wheels": "アルミホイール",
+      "sunroof": "サンルーフ",
+      "roof_rails": "ルーフレール",
+      "privacy_glass": "プライバシーガラス"
+    },
+    "走行・商用装備": {
+      "four_wd": "4WD",
+      "turbo": "ターボ",
+      "idle_stop": "アイドリングストップ",
+      "hybrid": "ハイブリッド",
+      "differential_lock": "デフロック",
+      "cargo_mat": "荷室マット",
+      "cargo_carrier": "ルーフキャリア",
+      "liftgate": "パワーゲート",
+      "refrigerated": "冷蔵・冷凍仕様",
+      "outlet": "AC電源"
+    }
+  },
+  "regions": [
+    "大正",
+    "大正区",
+    "大阪市大正区"
+  ],
+  "topics": [
+    {
+      "label": "車検",
+      "aliases": [
+        "車検",
+        "検査費用",
+        "法定費用"
+      ],
+      "href": "/inspection/"
+    },
+    {
+      "label": "整備",
+      "aliases": [
+        "整備",
+        "メンテナンス",
+        "オイル交換",
+        "定期点検"
+      ],
+      "href": "/maintenance/"
+    },
+    {
+      "label": "修理",
+      "aliases": [
+        "修理",
+        "故障",
+        "異音"
+      ],
+      "href": "/maintenance/"
+    },
+    {
+      "label": "車買取",
+      "aliases": [
+        "買取",
+        "査定",
+        "売却"
+      ],
+      "href": "/sell/"
+    },
+    {
+      "label": "下取り",
+      "aliases": [
+        "下取り",
+        "乗り換え"
+      ],
+      "href": "/sell/"
+    },
+    {
+      "label": "中古車",
+      "aliases": [
+        "中古車",
+        "在庫",
+        "車両本体",
+        "支払総額"
+      ],
+      "href": "/stock/"
+    },
+    {
+      "label": "車販売",
+      "aliases": [
+        "販売",
+        "購入",
+        "車選び"
+      ],
+      "href": "/buy/"
+    },
+    {
+      "label": "注文販売",
+      "aliases": [
+        "注文販売",
+        "取り寄せ",
+        "希望車種"
+      ],
+      "href": "/buy/#order"
+    },
+    {
+      "label": "ロードサービス",
+      "aliases": [
+        "ロードサービス",
+        "ロードアシスタンス",
+        "出動"
+      ],
+      "href": "/road-assistance/"
+    },
+    {
+      "label": "レッカー",
+      "aliases": [
+        "レッカー",
+        "搬送",
+        "けん引"
+      ],
+      "href": "/road-assistance/"
+    },
+    {
+      "label": "軽自動車",
+      "aliases": [
+        "軽自動車",
+        "軽ハイトワゴン"
+      ],
+      "href": "/stock/?category=kei"
+    },
+    {
+      "label": "商用車",
+      "aliases": [
+        "商用車",
+        "軽バン",
+        "トラック",
+        "軽トラック"
+      ],
+      "href": "/stock/?category=commercial"
+    },
+    {
+      "label": "乗用車",
+      "aliases": [
+        "乗用車",
+        "コンパクトカー"
+      ],
+      "href": "/stock/?category=passenger"
+    },
+    {
+      "label": "点検",
+      "aliases": [
+        "点検",
+        "消耗品"
+      ],
+      "href": "/maintenance/"
+    },
+    {
+      "label": "タイヤ",
+      "aliases": [
+        "タイヤ",
+        "パンク"
+      ],
+      "href": "/maintenance/"
+    }
+  ],
+  "tag_limit": 24
+}

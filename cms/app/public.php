@@ -35,6 +35,7 @@ function render_listing(string $type): void {
   $sort=(string)($params['sort']??'newest');if(in_array($sort,['price-asc','price-desc'],true))usort($rows,fn($a,$b)=>((int)payload($a)['total']<=>(int)payload($b)['total'])*($sort==='price-asc'?1:-1));
   if(in_array($category,['kei','commercial','passenger'],true))$title=['kei'=>'軽自動車','commercial'=>'商用車・トラック','passenger'=>'乗用車'][$category].'の在庫一覧';
  }
+ $tag=is_string($_GET['tag']??'')?trim($_GET['tag']??''):'';if($tag!==''){$rows=array_values(array_filter($rows,fn($row)=>in_array($tag,effective_tags(payload($row),$row['type']),true)));$title.='｜'.$tag;}
  $body='<section class="cms-public-list section"><span class="eyebrow">'.strtoupper($type).'</span><h1>'.e($title).'</h1>';
  if($type==='vehicle')$body.='<nav class="cms-category-nav" aria-label="車種カテゴリ"><a href="/stock/">すべて</a><a href="/stock/?category=kei">軽自動車</a><a href="/stock/?category=commercial">商用車・トラック</a><a href="/stock/?category=passenger">乗用車</a></nav><details class="cms-public-refine"><summary>条件を変更する</summary><form><div>'.input_field('keyword','キーワード',$_GET['keyword']??'').select_field('category','カテゴリ',[''=>'すべて','kei'=>'軽自動車','commercial'=>'商用車・トラック','passenger'=>'乗用車'],$_GET['category']??'').select_field('price','価格',[''=>'すべて','under100'=>'100万円未満','100to150'=>'100〜150万円','over150'=>'150万円超'],$_GET['price']??'').select_field('sort','並び順',['newest'=>'新着順','price-asc'=>'安い順','price-desc'=>'高い順'],$_GET['sort']??'').'</div><button class="button dark">条件を適用 →</button></form></details>';
  $body.='<p>'.count($rows).'件の公開情報</p>'.($rows?public_cards($rows):'<div class="cms-public-empty"><h2>現在、公開中の'.e(CONTENT_LABELS[$type]).'はありません。</h2><p>準備ができ次第ご案内します。</p></div>');
@@ -65,7 +66,7 @@ function route_contact(string $path): void {
  if(!in_array($path,['/contact/','/contact/review/'],true))abort_request(404,'ページが見つかりません。');
  if($_SERVER['REQUEST_METHOD']==='POST'){
   verify_csrf();foreach(['type','name','email','phone','message'] as $key){if(!is_string($_POST[$key]??''))abort_request(422,'入力形式をご確認ください。');$data[$key]=trim((string)($_POST[$key]??''));}$data['vehicle_id']=(int)($_POST['vehicle_id']??0);
-  if($data['vehicle_id']){$vehicle=query("SELECT id,published FROM contents WHERE id=? AND type='vehicle' AND published IS NOT NULL AND deleted_at IS NULL",[$data['vehicle_id']])->fetch();if($vehicle)$data['vehicle_title']=payload($vehicle)['title'];else{$data['vehicle_id']=0;}}
+  if($data['vehicle_id']){$vehicle=query("SELECT id,type,published FROM contents WHERE id=? AND type='vehicle' AND published IS NOT NULL AND deleted_at IS NULL",[$data['vehicle_id']])->fetch();if($vehicle)$data['vehicle_title']=payload($vehicle)['title'];else{$data['vehicle_id']=0;}}
   if(!in_array($data['type'],array_keys(INQUIRY_LABELS),true)||$data['name']===''||text_length($data['name'])>100||!filter_var($data['email'],FILTER_VALIDATE_EMAIL)||strlen($data['email'])>254||strlen($data['phone'])>30||$data['message']===''||strlen($data['message'])>9000||!isset($_POST['consent']))$error='お名前・メール・ご相談内容と、個人情報の取り扱いの確認を入力してください。';
   elseif(!empty($_POST['website'])||time()-(int)($_SESSION['contact_started']??time())<1)$error='入力内容をご確認ください。';
   else{

@@ -1,15 +1,18 @@
 <?php
 declare(strict_types=1);
 const CONTENT_LABELS=['vehicle'=>'在庫車','story'=>'カーストーリー','news'=>'お知らせ','column'=>'コラム'];
-const EQUIPMENT_LABELS=['navigation'=>'ナビ','camera'=>'バックカメラ','smart_key'=>'スマートキー','bluetooth'=>'Bluetooth','etc'=>'ETC','led'=>'LEDライト','safety'=>'衝突軽減ブレーキ','power_door'=>'電動スライドドア','aircon'=>'エアコン'];
+require_once __DIR__.'/discovery.php';
 const INQUIRY_LABELS=['general'=>'一般相談','vehicle'=>'車両のお問い合わせ','visit'=>'来店相談','order'=>'注文販売','appraisal'=>'買取・下取り','inspection'=>'車検','maintenance'=>'整備・修理','road'=>'ロードサービス'];
-function default_content(string $type): array {return ['title'=>'','slug'=>'','body'=>'','summary'=>'','seo_title'=>'','description'=>'','category'=>'','author'=>'','related_ids'=>[],'media_ids'=>[],'indexable'=>false,'is_sample'=>false,'consent_checked'=>false,'maker'=>'','model'=>'','grade'=>'','year'=>'','km'=>'','body_price'=>'','fees'=>'','total'=>'','price_condition'=>'','inspection'=>'','repair_history'=>'unknown','transmission'=>'AT','color'=>'','sale_status'=>'available','featured'=>false,'equipment'=>array_fill_keys(array_keys(EQUIPMENT_LABELS),false)];}
+function default_content(string $type): array {return ['title'=>'','slug'=>'','body'=>'','summary'=>'','seo_title'=>'','description'=>'','category'=>'','author'=>'','related_ids'=>[],'media_ids'=>[],'indexable'=>false,'is_sample'=>false,'consent_checked'=>false,'maker'=>'','model'=>'','grade'=>'','year'=>'','km'=>'','body_price'=>'','fees'=>'','total'=>'','price_condition'=>'','inspection'=>'','repair_history'=>'unknown','transmission'=>'AT','color'=>'','sale_status'=>'available','featured'=>false,'tags'=>[],'auto_tags'=>true,'target_region'=>in_array($type,['column','vehicle'],true)?'taisho':'','answer_summary'=>'','key_points'=>'','faq_text'=>'','sources_text'=>'','reviewed_on'=>'','equipment'=>array_fill_keys(array_keys(EQUIPMENT_LABELS),null)];}
 function posted_content(string $type): array {
  $d=default_content($type);
- foreach(['title','slug','body','summary','seo_title','description','category','author','maker','model','grade','year','km','body_price','fees','total','price_condition','inspection','repair_history','transmission','color','sale_status'] as $key){$raw=$_POST[$key]??'';if(!is_string($raw))throw new InvalidArgumentException('入力形式を確認してください。');$d[$key]=trim($raw);}
+ foreach(['title','slug','body','summary','seo_title','description','category','author','maker','model','grade','year','km','body_price','fees','total','price_condition','inspection','repair_history','transmission','color','sale_status','target_region','answer_summary','key_points','faq_text','sources_text','reviewed_on'] as $key){$raw=$_POST[$key]??'';if(!is_string($raw))throw new InvalidArgumentException('入力形式を確認してください。');$d[$key]=trim($raw);}
  foreach(['indexable','is_sample','consent_checked','featured'] as $key)$d[$key]=isset($_POST[$key]);
  foreach(['media_ids','related_ids'] as $key){$raw=$_POST[$key]??'';if(!is_string($raw)||strlen($raw)>1000)throw new InvalidArgumentException('画像・関連記事の指定が長すぎます。');$parts=array_filter(array_map('trim',explode(',',$raw)),fn($v)=>$v!=='');if(count($parts)>20||array_filter($parts,fn($v)=>!ctype_digit($v)||(int)$v<1))throw new InvalidArgumentException('画像・関連記事IDは正の数値を20件以内で指定してください。');$d[$key]=array_values(array_unique(array_map('intval',$parts)));}
- foreach(EQUIPMENT_LABELS as $key=>$label)$d['equipment'][$key]=isset($_POST['equipment'][$key]);
+ $d['tags']=parse_tags($_POST['tags']??'');$d['auto_tags']=isset($_POST['auto_tags']);
+ $equipment=$_POST['equipment']??[];if(!is_array($equipment))throw new InvalidArgumentException('装備の入力形式を確認してください。');
+ foreach(EQUIPMENT_LABELS as $key=>$label){$value=$equipment[$key]??'';if(!is_string($value)||!in_array($value,['','1','0'],true))throw new InvalidArgumentException('装備は未確認・あり・なしから選択してください。');$d['equipment'][$key]=$value===''?null:$value==='1';}
+ validate_discovery($d);
  return $d;
 }
 function validate_content(array $d,string $type,bool $publish,?array $existing): void {

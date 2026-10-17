@@ -49,7 +49,7 @@ function rate_allowed(string $kind,string $identity,int $limit,int $seconds): bo
 }
 function datetime_jp(?string $date): string {return $date?(new DateTimeImmutable($date,new DateTimeZone('UTC')))->setTimezone(new DateTimeZone('Asia/Tokyo'))->format('Y/m/d H:i'):'—';}
 function content_url(array $item): string {$prefix=['vehicle'=>'stock','story'=>'story','news'=>'news','column'=>'column'][$item['type']];return '/'.$prefix.'/'.rawurlencode($item['slug']).'/';}
-function payload(array $row,bool $draft=false): array {return json_decode((string)($draft?$row['draft']:$row['published']),true,512,JSON_THROW_ON_ERROR);}
+function payload(array $row,bool $draft=false): array {$data=json_decode((string)($draft?$row['draft']:$row['published']),true,512,JSON_THROW_ON_ERROR);$data['target_region']=$data['target_region']??'';return function_exists('default_content')?array_replace(default_content($row['type']),$data):$data;}
 function publishable_index(array $data): bool {return enabled('indexing_enabled')&&!empty($data['indexable'])&&empty($data['is_sample']);}
 function body_html(string $text): string {
  $html='';$paragraph=[];$inList=false;

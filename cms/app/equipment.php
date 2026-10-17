@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 function equipment_board(array $equipment): string {
+ if(!array_filter($equipment,fn($value)=>$value!==null))return '<p class="cms-help">装備情報は確認中です。未確認の装備は表示していません。</p>';
  $icons=[
   'navigation'=>'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="8" width="34" height="25" rx="3"/><path d="M17 41h14M24 33v8M16 25l8-12 8 12-8-4z"/></svg>',
   'camera'=>'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="13" width="25" height="23" rx="3"/><circle cx="18" cy="24" r="6"/><path d="m30 20 12-7v23l-12-7M11 8h12"/></svg>',
@@ -14,6 +15,6 @@ function equipment_board(array $equipment): string {
  ];
  $colors=['navigation'=>'#438641','camera'=>'#268477','smart_key'=>'#9b782c','bluetooth'=>'#3777b0','etc'=>'#7863a5','led'=>'#bd703b','safety'=>'#ac6265','power_door'=>'#3d8589','aircon'=>'#5686a3'];
  $html='<div class="equipment-board"><div class="equipment-board-heading"><span>EQUIPMENT</span><p class="equipment-legend"><span>カラー：装備あり</span><span>白黒：装備なし</span></p></div><ul class="equipment-grid" aria-label="装備一覧">';
- foreach(EQUIPMENT_LABELS as $key=>$label){$on=!empty($equipment[$key]);$html.='<li class="equipment-tile '.($on?'is-equipped':'is-absent').'" style="--equipment-color:'.$colors[$key].'">'.$icons[$key].'<strong>'.e($label).'</strong><span class="equipment-status">'.($on?'装備あり':'装備なし').'</span></li>';}
+ foreach(EQUIPMENT_LABELS as $key=>$label){if(!array_key_exists($key,$equipment)||$equipment[$key]===null)continue;$on=$equipment[$key]===true;$html.='<li class="equipment-tile '.($on?'is-equipped':'is-absent').'" style="--equipment-color:'.($colors[$key]??'#4e7b72').'">'.($icons[$key]??'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="7"/><path d="m15 24 6 6 12-13"/></svg>').'<strong>'.e($label).'</strong><span class="equipment-status">'.($on?'装備あり':'装備なし').'</span></li>';}
  return $html.'</ul></div>';
 }

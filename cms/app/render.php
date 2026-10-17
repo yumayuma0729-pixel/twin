@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__.'/equipment.php';
 function render_shell(string $title,string $description,string $body,string $canonicalPath,bool $index=false,?array $structured=null): void {
- $source=file_get_contents(site_root().'/company/index.html');$start=strpos($source,'<main');$end=strpos($source,'</main>',$start)+7;
+ $source=file_get_contents(site_root().'/company/index.html');$source=preg_replace('#<script type="application/ld\+json" data-discovery>.*?</script>#s','',$source);$start=strpos($source,'<main');$end=strpos($source,'</main>',$start)+7;
  $source=substr($source,0,$start).'<main id="main" class="cms-public-main">'.$body.'</main>'.substr($source,$end);
  $source=preg_replace_callback('#<title>.*?</title>#s',fn()=>'<title>'.e($title).' | Twin Assist</title>',$source,1);
  $source=preg_replace_callback('#<meta name="description" content="[^"]*">#',fn()=>'<meta name="description" content="'.e($description).'">',$source,1);
@@ -31,13 +31,18 @@ function render_content(array $row,bool $preview=false): void {
  }else{
   $body.='<div class="cms-public-meta"><time>公開：'.e(datetime_jp($row['published_at'])).'</time>'.($d['author']?'<span>著者：'.e($d['author']).'</span>':'').'</div>';if($d['media_ids'])$body.='<figure class="cms-public-cover">'.media_tag((int)$d['media_ids'][0],'',false).'</figure>';
  }
- $body.='<div class="cms-article-body">'.body_html($d['body']).'</div>';
+ $body.=answer_blocks($d).'<div class="cms-article-body">'.body_html($d['body']).'</div>'.evidence_blocks($d).topic_block(effective_tags($d,$row['type']),($d['target_region']??'')==='taisho',$row['type']);
  if($row['type']!=='vehicle'&&count($d['media_ids'])>1){$body.='<div class="cms-public-inline-images">';foreach(array_slice($d['media_ids'],1) as $id)$body.=media_tag((int)$id);$body.='</div>';}
  $related=[];if($row['type']==='vehicle'&&$d['total']!==''){$candidates=query("SELECT * FROM contents WHERE type='vehicle' AND id<>? AND published IS NOT NULL AND deleted_at IS NULL ORDER BY public_updated_at DESC LIMIT 100",[$row['id']])->fetchAll();$related=array_values(array_filter($candidates,fn($c)=>abs((int)payload($c)['total']-(int)$d['total'])<=300000&&payload($c)['sale_status']!=='sold'));usort($related,fn($a,$b)=>abs((int)payload($a)['total']-(int)$d['total'])<=>abs((int)payload($b)['total']-(int)$d['total']));$related=array_slice($related,0,3);}
  elseif(!empty($d['related_ids']))foreach($d['related_ids'] as $id){$r=query('SELECT * FROM contents WHERE id=? AND published IS NOT NULL AND deleted_at IS NULL AND id<>?',[$id,$row['id']])->fetch();if($r)$related[]=$r;}
+ if(!$related&&$row['type']!=='vehicle'){$tags=array_values(array_diff(effective_tags($d,$row['type']),TARGET_REGIONS));$scores=[];foreach(query("SELECT * FROM contents WHERE type<>'vehicle' AND id<>? AND published IS NOT NULL AND deleted_at IS NULL ORDER BY public_updated_at DESC LIMIT 200",[$row['id']])->fetchAll() as $candidate){$score=count(array_intersect($tags,effective_tags(payload($candidate),$candidate['type'])));if($score)$scores[]=['score'=>$score,'row'=>$candidate];}usort($scores,fn($a,$b)=>$b['score']<=>$a['score']);$related=array_column(array_slice($scores,0,3),'row');}
  if($related)$body.='<section class="cms-public-related"><h2>'.($row['type']==='vehicle'?'同じ価格帯の車':'関連記事').'</h2>'.public_cards($related).'</section>';
  $body.='<a class="text-link" href="/'.['vehicle'=>'stock','story'=>'story','news'=>'news','column'=>'column'][$row['type']].'/">一覧へ戻る →</a></article><dialog id="cms-real-photo-dialog" class="cms-real-photo-dialog"><button type="button" data-real-close aria-label="写真を閉じる">×</button><img src="" alt=""><div><button type="button" data-real-prev>← 前へ</button><span data-real-count></span><button type="button" data-real-next>次へ →</button></div></dialog>';
  $structured=null;if($row['type']!=='vehicle'&&!$preview&&$row['published_at']){$structured=['@context'=>'https://schema.org','@type'=>'Article','headline'=>$d['title'],'datePublished'=>(new DateTimeImmutable($row['published_at'],new DateTimeZone('UTC')))->format(DATE_ATOM),'dateModified'=>(new DateTimeImmutable($row['public_updated_at'],new DateTimeZone('UTC')))->format(DATE_ATOM),'mainEntityOfPage'=>base_url().content_url($row)];if($d['author'])$structured['author']=['@type'=>'Person','name'=>$d['author']];if($d['media_ids'])$structured['image']=base_url().'/media/'.(int)$d['media_ids'][0].'/';}
+ $entities=[];if($structured){$structured['keywords']=effective_tags($d,$row['type']);$structured['description']=$d['description'];$structured['inLanguage']='ja';$structured['publisher']=['@type'=>'Organization','name'=>'Twin Assist'];if($d['sources_text'])$structured['citation']=array_column(paired_lines($d['sources_text'],10,true),1);$entities[]=$structured;}
+ $entities[]=['@type'=>'BreadcrumbList','itemListElement'=>[['@type'=>'ListItem','position'=>1,'name'=>'ホーム','item'=>base_url().'/'],['@type'=>'ListItem','position'=>2,'name'=>$d['title'],'item'=>base_url().content_url($row)]]];
+ $faq=paired_lines($d['faq_text']??'',8);if($faq)$entities[]=['@type'=>'FAQPage','mainEntity'=>array_map(fn($pair)=>['@type'=>'Question','name'=>$pair[0],'acceptedAnswer'=>['@type'=>'Answer','text'=>$pair[1]]],$faq)];
+ $structured=$preview?null:['@context'=>'https://schema.org','@graph'=>$entities];
  render_shell($d['seo_title']?:$d['title'],$d['description'],$body,content_url($row),!$preview&&publishable_index($d),$structured);
 }
 
@@ -48,6 +53,6 @@ function live_sidebar(string $html): string {
  $html=str_replace('<form id="rail-inquiry-form" method="post" action="/contact/">','<form id="rail-inquiry-form" method="post" action="/contact/review/" data-server-processing="1">'.csrf_field().'<input type="hidden" name="vehicle_id" value="'.$vehicleId.'">',$html);
  $html=str_replace('<fieldset id="rail-inquiry-fields" disabled>','<fieldset id="rail-inquiry-fields">',$html);
  $html=str_replace('入力・確認までのプレビューです。<br>現在は送信・予約できません。','入力内容の確認後に送信できます。<br>来店日時は別途ご相談のうえ調整します。',$html);
- if($vehicleId){$r=query("SELECT published FROM contents WHERE id=? AND published IS NOT NULL AND deleted_at IS NULL",[$vehicleId])->fetch();if($r)$html=str_replace('<p id="rail-vehicle-context" hidden></p>','<p id="rail-vehicle-context">ご覧の車両：'.e(payload($r)['title']).'</p>',$html);}
+ if($vehicleId){$r=query("SELECT type,published FROM contents WHERE id=? AND published IS NOT NULL AND deleted_at IS NULL",[$vehicleId])->fetch();if($r)$html=str_replace('<p id="rail-vehicle-context" hidden></p>','<p id="rail-vehicle-context">ご覧の車両：'.e(payload($r)['title']).'</p>',$html);}
  return $html;
 }
