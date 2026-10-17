@@ -74,3 +74,5 @@ header .logo .brand-wordmark{display:block;width:244px;max-width:100%;height:aut
 @media(min-width:1280px){.rail-brand .rail-wordmark{width:166px;height:auto;margin-top:16px;object-fit:contain}.rail-brand .rail-wordmark:hover{transform:none;filter:none}}
 @media(max-width:767px){header .logo .brand-wordmark{width:208px}header .logo{max-width:calc(100% - 85px)}}
 @media(max-width:374px){header .logo .brand-wordmark{width:176px}}
+
+@media(max-width:767px){.home-vehicle-grid .vehicle-card-image{padding-top:16px}}
