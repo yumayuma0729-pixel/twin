@@ -14,14 +14,3 @@ document.querySelectorAll('a[href^="#faq-"]').forEach(link=>link.addEventListene
 // Progress follows natural scrolling; the content also remains readable without JS.
 const scrollStrengths=[...document.querySelectorAll('.scroll-strength')];
 if(scrollStrengths.length){const navItems=[...document.querySelectorAll('[data-strength-nav]')];const motion=matchMedia('(prefers-reduced-motion: reduce)');let rafPending=false;const activate=section=>{for(const item of scrollStrengths)item.classList.toggle('is-active',item===section);for(const link of navItems){if(link.dataset.strengthNav===section.id)link.setAttribute('aria-current','step');else link.removeAttribute('aria-current');}const current=document.querySelector('.rail-current');if(current)current.textContent=section.querySelector('.strength-detail-number').textContent;};const update=()=>{rafPending=false;const anchor=innerHeight*.45;const closest=scrollStrengths.reduce((best,section)=>Math.abs(section.getBoundingClientRect().top+section.getBoundingClientRect().height/2-anchor)<Math.abs(best.getBoundingClientRect().top+best.getBoundingClientRect().height/2-anchor)?section:best);activate(closest);};addEventListener('scroll',()=>{if(!rafPending){rafPending=true;requestAnimationFrame(update);}},{passive:true});addEventListener('resize',update);addEventListener('hashchange',update);if('IntersectionObserver' in window&&!motion.matches){const observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.remove('has-pending-reveal');observer.unobserve(entry.target);}},{threshold:.12});for(const section of scrollStrengths){if(section.getBoundingClientRect().top>innerHeight)section.classList.add('has-pending-reveal');observer.observe(section);}}update();}
-
-// Keep the dimensional brand mark still while it is offscreen or the tab is hidden.
-{
- const section=document.querySelector('#services.strengths-atmosphere');
- if(section?.querySelector('.hex-metal-solid')){
-  let visible=false;
-  const update=()=>section.classList.toggle('is-motion-visible',visible&&!document.hidden);
-  if('IntersectionObserver' in window){new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;update();},{threshold:0.1}).observe(section);}else{visible=true;update();}
-  document.addEventListener('visibilitychange',update);
- }
-}
