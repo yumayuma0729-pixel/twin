@@ -15,11 +15,11 @@ body.has-desktop-rails{background:#111719;padding-bottom:0}
 #rail-confirmation[hidden],#rail-inquiry-form[hidden],#rail-vehicle-context[hidden]{display:none!important}#rail-confirmation h4{font-size:14px;margin:15px 0 0;font-weight:500}#rail-confirm-list{margin:12px 0}#rail-confirm-list dt{font-size:11px;color:#8b9690;margin-top:12px}#rail-confirm-list dd{font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;margin:3px 0 0}#rail-edit,.rail-send-disabled{width:100%;padding:11px;font-size:12px;border:1px solid #becbc3;background:white;margin-top:12px}.rail-send-disabled{background:#e0e6e2;color:#78847c;cursor:not-allowed}.has-desktop-rails header nav{display:none}
 }
 @media(min-width:1280px){
-:root{--desktop-left:170px;--desktop-right:320px}
+:root{--desktop-left:clamp(260px,20vw,330px);--desktop-right:var(--desktop-left)}
 .desktop-brand-rail{display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;width:calc((100vw - var(--desktop-content) + var(--desktop-left) - var(--desktop-right))/2);padding:32px 18px 24px;overflow-y:auto;overscroll-behavior-y:contain;background:#111719;color:#d2dcdc;scrollbar-width:thin;z-index:4}
 .rail-brand{display:flex;flex-direction:column;align-items:center;align-self:center;width:100%;max-width:200px}.rail-brand img{width:85px;height:85px;object-fit:contain}.rail-brand>span{font-size:16px;font-weight:700;letter-spacing:.08em;white-space:nowrap;margin-top:12px}.rail-brand small{font-size:11px;letter-spacing:.12em;color:#8d9c9b;margin-top:7px}.rail-brand-message{font-size:12px;line-height:2;color:#92a3a1;margin:27px auto 32px;max-width:190px;width:100%}.rail-service-nav{width:100%;max-width:190px;margin:0 auto}.rail-service-nav>.rail-eyebrow{font-size:11px;margin-bottom:13px;color:#667b79}.rail-service-nav a{display:flex;align-items:center;gap:10px;border-top:1px solid #31403f;padding:12px 0;font-size:12px;line-height:1.7}.rail-service-nav a>span{font-size:11px;color:#6d8480}.rail-service-nav a>i{margin-left:auto;font-style:normal;color:#6e8581}.rail-service-nav a[aria-current=page]{color:#fff;border-top-color:#a4b4af}.rail-service-nav a[aria-current=page]>span{color:#d5e3dc}.rail-brand-foot{margin:auto auto 0;padding-top:30px;width:100%;max-width:190px}.rail-brand-foot a{display:block;font-size:11px;line-height:2.6;color:#95a6a2}.rail-brand-foot p{font-size:12px;line-height:2;color:#607570;margin-top:17px;letter-spacing:.04em}
 }
-@media(min-width:1600px){:root{--desktop-left:220px;--desktop-right:360px}.desktop-contact-rail{padding:32px 25px}.desktop-brand-rail{padding:40px 25px 30px}.rail-brand img{width:110px;height:110px}.rail-brand>span{font-size:20px}.rail-brand small{font-size:11px}.rail-brand-message{font-size:14px}.rail-service-nav a{font-size:14px;padding:14px 0}.desktop-contact-rail h2{font-size:29px}.rail-contact-actions strong{font-size:15px}.rail-contact-actions>button{min-height:82px}.rail-form-panel{padding:20px}.has-desktop-rails header nav{display:flex}}
+@media(min-width:1600px){:root{--desktop-left:360px;--desktop-right:360px}.desktop-contact-rail{padding:32px 25px}.desktop-brand-rail{padding:40px 25px 30px}.rail-brand img{width:110px;height:110px}.rail-brand>span{font-size:20px}.rail-brand small{font-size:11px}.rail-brand-message{font-size:14px}.rail-service-nav a{font-size:14px;padding:14px 0}.desktop-contact-rail h2{font-size:29px}.rail-contact-actions strong{font-size:15px}.rail-contact-actions>button{min-height:82px}.rail-form-panel{padding:20px}.has-desktop-rails header nav{display:flex}}
 @media(prefers-reduced-motion:reduce){.rail-contact-actions>button{transition:none}}
 @media(min-width:1024px){.rail-phone .rail-channel-icon{color:#e6eeeb}}
 /* Graphite and brushed-silver consultation rail. */
@@ -105,3 +105,17 @@ header .logo .brand-wordmark{display:block;width:244px;max-width:100%;height:aut
  .customer-story-body p,.column-body p{-webkit-line-clamp:2;line-clamp:2;line-height:1.6}
  .customer-story-body{padding:10px}
 }
+
+/* Persistent CTAs attract attention without moving their click targets. */
+.floating-contact button{position:relative;overflow:hidden}
+.floating-contact button:before{content:'';position:absolute;inset:-80% -50%;pointer-events:none;background:linear-gradient(110deg,transparent 40%,#ffffff38 50%,transparent 60%)}
+.floating-contact button:before,.rail-contact-actions>button:before{animation:cta-silver-sweep 7s ease-in-out infinite}
+.floating-contact .contact-phone:before,.rail-contact-actions>.rail-phone:before{animation-delay:3.5s}
+.floating-contact .contact-line,.rail-contact-actions>.rail-line{animation:cta-line-glow 5s ease-in-out infinite}
+.floating-contact .contact-symbol,.rail-contact-actions .rail-channel-icon{animation:cta-icon-lift 5s ease-in-out infinite}
+.floating-contact .phone-symbol,.rail-phone .rail-channel-icon{animation-delay:2.5s}
+.floating-contact button:is(:hover,:focus-visible):before,.rail-contact-actions>button:is(:hover,:focus-visible):before{animation-play-state:paused}
+@keyframes cta-silver-sweep{0%,70%{transform:translateX(-95%);opacity:0}73%{opacity:1}91%{transform:translateX(95%);opacity:1}92%,100%{transform:translateX(95%);opacity:0}}
+@keyframes cta-icon-lift{0%,70%,100%{transform:translateY(0)}77%,88%{transform:translateY(-2px)}82%,94%{transform:translateY(0)}}
+@keyframes cta-line-glow{0%,65%,100%{box-shadow:0 0 0 0 #00c65a00}82%{box-shadow:0 0 16px 1px #00c65a55}}
+@media(prefers-reduced-motion:reduce){.floating-contact button,.floating-contact button:before,.floating-contact .contact-symbol,.rail-contact-actions>button,.rail-contact-actions>button:before,.rail-contact-actions .rail-channel-icon{animation:none!important}.floating-contact button:before{display:none}}
