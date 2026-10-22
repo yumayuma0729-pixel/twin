@@ -95,3 +95,18 @@
 .customer-story-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:44%;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:1px 20px 12px 1px;margin-right:-20px;scrollbar-width:thin;scrollbar-color:#92999d #e9eceb}
 .customer-story-grid .customer-story-card:nth-child(n){display:block;scroll-snap-align:start}.customer-story-visual{height:108px}.customer-story-body{padding:11px 10px}.customer-story-body h3{font-size:14px;line-height:1.7}.customer-story-body p{font-size:13px;line-height:1.8}.story-preparing{font-size:11px;padding:3px 4px}.sample-story-more{font-size:12px}.sample-story-article{grid-template-columns:1fr;gap:20px;margin:35px 0;padding-top:25px}.sample-story-article>img{height:220px}.sample-story-article h2{font-size:23px}.sample-story-article p{font-size:14px}
 }
+/* A machined silver hexagon: actual depth layers, with a mark on both faces. */
+#services.strengths-atmosphere .hex-core{perspective:650px;overflow:visible;isolation:auto}
+.hex-metal-stage{display:block;position:absolute;inset:6%;margin:0!important;transform:rotate(-7deg);pointer-events:none}
+.hex-metal-solid{position:absolute;inset:0;transform-style:preserve-3d;animation:hex-metal-turn 18s linear infinite;animation-play-state:paused}
+.hex-metal-layer,.hex-metal-face{display:block;position:absolute;inset:0;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.hex-metal-layer{background:linear-gradient(145deg,#f2f3f4 0%,#8a9097 26%,#30363d 50%,#d7dce0 76%,#6f7781 100%);transform:translateZ(calc(var(--layer) * 1px))}
+.hex-metal-face{background:linear-gradient(140deg,#f8f9fa,#777f88 38%,#e7eaed 56%,#525c66);backface-visibility:hidden}
+.hex-metal-face:before{content:'';position:absolute;inset:1.5px;clip-path:inherit;background:linear-gradient(145deg,#252c32,#0b1014 62%,#343c44)}
+.hex-metal-front{transform:translateZ(8px)}
+.hex-metal-back{transform:rotateY(180deg) translateZ(8px)}
+#services.strengths-atmosphere .hex-metal-face img{position:absolute;inset:5%;width:90%;height:90%;object-fit:contain;filter:none}
+#services.strengths-atmosphere.is-motion-visible .hex-metal-solid{animation-play-state:running}
+#services.strengths-atmosphere .hex-core:is(:hover,:focus-visible) .hex-metal-solid{animation-play-state:paused}
+@keyframes hex-metal-turn{from{transform:rotateX(10deg) rotateY(0deg)}to{transform:rotateX(10deg) rotateY(360deg)}}
+@media(prefers-reduced-motion:reduce){.hex-metal-solid{animation:none;transform:rotateX(8deg) rotateY(-15deg)}}
