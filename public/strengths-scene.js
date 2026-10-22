@@ -37,21 +37,21 @@
   const ordered=faces.map(f=>({...f,rn:rotate(f.n,q),rc:rotate(f.c,q),rp:f.points.map(p=>rotate(p,q))})).filter(f=>f.rn[2]>.01).sort((a,b)=>a.rc[2]-b.rc[2]);
   for(const face of ordered){const points=face.rp.map(project),light=Math.max(0,dot(face.rn,norm([-.6,.8,1]))),isHex=face.points.length===6;
    const metal=Math.round((isHex?125:65)+light*(isHex?95:85));
-   const silver=(offset)=>{const v=Math.max(28,Math.min(250,metal+offset));return `rgb(${v},${Math.min(253,v+3)},${Math.min(255,v+7)})`};
+   const silver=(offset)=>{const v=Math.max(28,Math.min(250,metal+offset));return `rgb(${v},${v},${Math.min(255,v+3)})`};
    const gradient=ctx.createLinearGradient(w*.12,h*.1,w*.85,h*.9);
    gradient.addColorStop(0,silver(35));gradient.addColorStop(.24,silver(12));gradient.addColorStop(.43,silver(-42));gradient.addColorStop(.52,silver(40));gradient.addColorStop(.63,silver(20));gradient.addColorStop(1,silver(-30));
    ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.fillStyle=gradient;ctx.fill();
-   ctx.strokeStyle=isHex?'#f5f8fbd9':'#bac6d0a0';ctx.lineWidth=isHex?1.5:1;ctx.stroke();
+   ctx.strokeStyle=isHex?'#f5f3f7d9':'#bdbbc2a0';ctx.lineWidth=isHex?1.5:1;ctx.stroke();
    // Inset bevel catches the light, while the darker connector faces give depth.
-   const center=project(face.rc);ctx.beginPath();points.forEach((p,i)=>{const x=center[0]+(p[0]-center[0])*.975,y=center[1]+(p[1]-center[1])*.975;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath();ctx.strokeStyle=light>.5?'#ffffff70':'#18232d66';ctx.lineWidth=.7;ctx.stroke();
+   const center=project(face.rc);ctx.beginPath();points.forEach((p,i)=>{const x=center[0]+(p[0]-center[0])*.975,y=center[1]+(p[1]-center[1])*.975;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath();ctx.strokeStyle=light>.5?'#ffffff70':'#35323966';ctx.lineWidth=.7;ctx.stroke();
    if(!isHex||face.rn[2]<.23)continue;
    // Clip in screen space BEFORE transforming text into the face's local plane.
    ctx.save();ctx.beginPath();points.forEach((p,i)=>{const x=center[0]+(p[0]-center[0])*.89,y=center[1]+(p[1]-center[1])*.89;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath();ctx.clip();
    const c=project(face.rc),u=project(rotate(add(face.c,face.u),q)),v=project(rotate(add(face.c,face.v),q));ctx.transform(u[0]-c[0],u[1]-c[1],c[0]-v[0],c[1]-v[1],c[0],c[1]);ctx.textAlign='center';ctx.textBaseline='middle';
    const fitText=(text,y,size,weight=600,maxWidth=1.5)=>{ctx.font=`${weight} ${size}px Arial,"Noto Sans JP",sans-serif`;const measured=ctx.measureText(text).width;if(measured>maxWidth)ctx.font=`${weight} ${size*maxWidth/measured}px Arial,"Noto Sans JP",sans-serif`;ctx.fillText(text,0,y)};
-   if(face.index>=0){const i=face.index;ctx.fillStyle='#3c4855';fitText('0'+(i+1)+' / '+en[i],-.48,.22,500,1.45);ctx.fillStyle='#18232d';
+   if(face.index>=0){const i=face.index;ctx.fillStyle='#59575c';fitText('0'+(i+1)+' / '+en[i],-.48,.22,500,1.45);ctx.fillStyle='#353338';
     if(i===4){fitText('ロード',-.06,.31);fitText('サービス',.3,.31)}else if(i===5){fitText('洗車・',-.06,.3);fitText('コーティング',.3,.3)}else fitText(labels[i],.06,.33);
-    ctx.strokeStyle='#26334050';ctx.lineWidth=.016;ctx.beginPath();ctx.moveTo(-.45,.68);ctx.lineTo(.45,.68);ctx.stroke();
+    ctx.strokeStyle='#514e5650';ctx.lineWidth=.016;ctx.beginPath();ctx.moveTo(-.45,.68);ctx.lineTo(.45,.68);ctx.stroke();
    }else if(logo.complete&&logo.naturalWidth){ctx.drawImage(logo,-.72,-.72,1.44,1.44)}ctx.restore();
   }
 
