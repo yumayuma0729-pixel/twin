@@ -3,6 +3,8 @@
  if(!canvas)return;const ctx=canvas.getContext('2d');if(!ctx)return;
  const copies=[...section.querySelectorAll('[data-strength-face]')],links=[...section.querySelectorAll('[data-strength-jump]')];
  const reduced=matchMedia('(prefers-reduced-motion: reduce)'),labels=['車を買う','車を売る','車検','整備・修理','ロードサービス','洗車・コーティング'];
+ const variants=[...section.querySelectorAll('[data-strength-variant]')];
+ let variant=new URL(location.href).searchParams.get('strengths-view')==='logo'?'logo':'polyhedron';
  const en=['BUY','SELL','INSPECTION','MAINTENANCE','ROADSIDE','CAR CARE'];
  const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],norm=a=>{const l=Math.hypot(...a);return a.map(v=>v/l)},add=(a,b)=>a.map((v,i)=>v+b[i]);
  const vertices=[];for(let zero=0;zero<3;zero++)for(const swap of [false,true])for(const a of [-1,1])for(const b of [-2,2]){const v=[0,0,0],other=[0,1,2].filter(i=>i!==zero);v[other[0]]=swap?b:a;v[other[1]]=swap?a:b;vertices.push(v)}
@@ -25,12 +27,29 @@
  const slerp=(a,b,t)=>{let d=dot(a,b);if(d<0){b=b.map(v=>-v);d=-d}if(d>.999)return norm(a.map((v,i)=>v+(b[i]-v)*t));const angle=Math.acos(Math.min(1,d)),s=Math.sin(angle);return a.map((v,i)=>(v*Math.sin((1-t)*angle)+b[i]*Math.sin(t*angle))/s)};
  const rotate=(p,q)=>{const xyz=q.slice(0,3),t=cross(xyz,p).map(v=>2*v);return add(add(p,t.map(v=>v*q[3])),cross(xyz,t))};
  const logo=new Image();logo.src='/images/twin-logo-mark.png';logo.onload=()=>schedule();
+ const logoSide=document.createElement('canvas');logoSide.width=512;logoSide.height=512;const sideCtx=logoSide.getContext('2d');
+ let logoSideReady=false;
  let progress=0,target=0,frame=0,active=-1,enhanced=false,inView=false;
  function setActive(i){if(active===i)return;active=i;copies.forEach((e,j)=>{e.hidden=enhanced&&j!==i});links.forEach((e,j)=>{if(i===j)e.setAttribute('aria-current','true');else e.removeAttribute('aria-current')})}
+ function drawLogo(value,w,h){
+  const step=Math.min(5,Math.round(value*5)),number=String(step+1).padStart(2,'0');
+  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`500 ${Math.min(w*.64,h*.75)}px Arial,sans-serif`;ctx.strokeStyle='#c8c3d131';ctx.lineWidth=1;ctx.strokeText(number,w*.5,h*.45);ctx.restore();
+  const size=Math.min(w,h)*.30,yaw=value*Math.PI*5/3-.22,tilt=-.12+Math.sin(value*Math.PI)*.12,roll=-.10;
+  const rotation=p=>{const x=p[0]*Math.cos(yaw)+p[2]*Math.sin(yaw),z=-p[0]*Math.sin(yaw)+p[2]*Math.cos(yaw),y=p[1]*Math.cos(tilt)-z*Math.sin(tilt),zz=p[1]*Math.sin(tilt)+z*Math.cos(tilt);return [x*Math.cos(roll)-y*Math.sin(roll),x*Math.sin(roll)+y*Math.cos(roll),zz]};
+  const project=p=>{const r=rotation(p),f=8/(8-r[2]);return [w*.5+r[0]*size*f,h*.47-r[1]*size*f]};
+  ctx.save();ctx.translate(w*.5,h*.91);ctx.scale(1,.12);const shadow=ctx.createRadialGradient(0,0,0,0,0,size*1.4);shadow.addColorStop(0,'#000b');shadow.addColorStop(1,'#0000');ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(0,0,size*1.4,0,Math.PI*2);ctx.fill();ctx.restore();
+  if(!logo.complete||!logo.naturalWidth)return;
+  if(!logoSideReady){sideCtx.drawImage(logo,0,0,512,512);sideCtx.globalCompositeOperation='source-in';const silver=sideCtx.createLinearGradient(0,0,512,512);silver.addColorStop(0,'#f2eef6');silver.addColorStop(.23,'#8e8b94');silver.addColorStop(.5,'#44424b');silver.addColorStop(.76,'#c9c5cf');silver.addColorStop(1,'#727079');sideCtx.fillStyle=silver;sideCtx.fillRect(0,0,512,512);logoSideReady=true;}
+  const front=Math.cos(yaw)>=0,depths=Array.from({length:25},(_,i)=>-.18+i*.36/24);if(!front)depths.reverse();
+  const paint=(image,z)=>{const origin=project([-1.2,1.2,z]),right=project([1.2,1.2,z]),bottom=project([-1.2,-1.2,z]);ctx.save();ctx.transform((right[0]-origin[0])/512,(right[1]-origin[1])/512,(bottom[0]-origin[0])/512,(bottom[1]-origin[1])/512,origin[0],origin[1]);ctx.drawImage(image,0,0,512,512);ctx.restore()};
+  for(const z of depths)paint(logoSide,z);
+  paint(logo,front?.185:-.185);
+ }
  function draw(value){
   const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2),w=rect.width,h=rect.height;if(!w||!h)return;
   if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr)}
   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+  if(variant==='logo'){drawLogo(value,w,h);return;}
   const step=Math.min(4,Math.floor(value*5)),t=value===1?1:value*5-step,q=slerp(orientations[step],orientations[step+1],t*t*(3-2*t));
   const size=Math.min(w*.19,h*.19),camera=10,project=p=>[w*.5+p[0]*size*camera/(camera-p[2]),h*.47-p[1]*size*camera/(camera-p[2])];
   ctx.save();ctx.translate(w*.5,h*.92);ctx.scale(1,.14);const shadow=ctx.createRadialGradient(0,0,0,0,0,size*2);shadow.addColorStop(0,'#0009');shadow.addColorStop(1,'#0000');ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(0,0,size*2,0,Math.PI*2);ctx.fill();ctx.restore();
@@ -61,5 +80,8 @@
  function update(){const r=section.getBoundingClientRect();inView=r.bottom>0&&r.top<innerHeight;if(enhanced){target=Math.max(0,Math.min(1,-r.top/(section.offsetHeight-innerHeight)));setActive(Math.round(target*5))}if(inView)schedule()}
  function configure(){enhanced=!reduced.matches&&innerHeight>=650;section.dataset.enhanced=String(enhanced);active=-1;setActive(Math.round(target*5));copies.forEach((e,i)=>e.hidden=enhanced&&i!==active);update()}
  links.forEach((link,i)=>link.addEventListener('click',event=>{if(enhanced){event.preventDefault();const top=scrollY+section.getBoundingClientRect().top+(section.offsetHeight-innerHeight)*i/5;window.scrollTo({top,behavior:'instant'})}else{target=i/5;setActive(i);schedule()}}));
+ function selectVariant(next,updateUrl=false){variant=next==='logo'?'logo':'polyhedron';section.dataset.variant=variant;variants.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.strengthVariant===variant)));if(updateUrl){const url=new URL(location.href);if(variant==='logo')url.searchParams.set('strengths-view','logo');else url.searchParams.delete('strengths-view');history.replaceState(null,'',url)}schedule();}
+ variants.forEach(button=>button.addEventListener('click',()=>selectVariant(button.dataset.strengthVariant,true)));
+ selectVariant(variant);
  addEventListener('scroll',update,{passive:true});addEventListener('resize',configure);reduced.addEventListener('change',configure);configure();draw(0);
 })();
