@@ -59,7 +59,7 @@
  function render(){frame=0;progress=reduced.matches?target:progress+(target-progress)*.18;if(Math.abs(target-progress)<.0002)progress=target;draw(progress);if(progress!==target&&inView)schedule()}
  function schedule(){if(!frame)frame=requestAnimationFrame(render)}
  function update(){const r=section.getBoundingClientRect();inView=r.bottom>0&&r.top<innerHeight;if(enhanced){target=Math.max(0,Math.min(1,-r.top/(section.offsetHeight-innerHeight)));setActive(Math.round(target*5))}if(inView)schedule()}
- function configure(){enhanced=!reduced.matches&&innerHeight>=650;section.dataset.enhanced=String(enhanced);active=-1;setActive(Math.round(target*5));copies.forEach((e,i)=>e.hidden=enhanced&&i!==active);update()}
+ function configure(){enhanced=!reduced.matches&&innerHeight>=420;section.dataset.enhanced=String(enhanced);active=-1;setActive(Math.round(target*5));copies.forEach((e,i)=>e.hidden=enhanced&&i!==active);update()}
  links.forEach((link,i)=>link.addEventListener('click',event=>{if(enhanced){event.preventDefault();const top=scrollY+section.getBoundingClientRect().top+(section.offsetHeight-innerHeight)*i/5;window.scrollTo({top,behavior:'instant'})}else{target=i/5;setActive(i);schedule()}}));
- addEventListener('scroll',update,{passive:true});addEventListener('resize',configure);reduced.addEventListener('change',configure);configure();draw(0);
+ addEventListener('scroll',update,{passive:true});addEventListener('resize',configure);if(reduced.addEventListener)reduced.addEventListener('change',configure);else if(reduced.addListener)reduced.addListener(configure);configure();draw(0);
 })();
