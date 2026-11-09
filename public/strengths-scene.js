@@ -5,7 +5,7 @@
  const reduced=matchMedia('(prefers-reduced-motion: reduce)'),labels=['車を買う','車を売る','車検','整備・修理','ロードサービス','洗車・コーティング'];
  const en=['BUY','SELL','INSPECTION','MAINTENANCE','ROADSIDE','CAR CARE'];
  const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],norm=a=>{const l=Math.hypot(...a);return a.map(v=>v/l)},add=(a,b)=>a.map((v,i)=>v+b[i]);
- // Hexagonal panels on a spherical metal body. Small seams accommodate curvature.
+ // Freestanding hexagonal metal panels; no circular backing or outer ring.
  const coordinates=[1,1+Math.SQRT2,1+2*Math.SQRT2],radiusScale=Math.sqrt(5)/Math.hypot(...coordinates),vertices=[];
  for(let a=0;a<3;a++)for(let b=0;b<3;b++)if(a!==b){const c=3-a-b;for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])vertices.push([coordinates[a]*x,coordinates[b]*y,coordinates[c]*z].map(v=>v*radiusScale))}
  const normals=[];for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])normals.push([x,y,z]);
@@ -39,9 +39,6 @@
   const step=Math.min(4,Math.floor(value*5)),t=value===1?1:value*5-step,q=slerp(orientations[step],orientations[step+1],t*t*(3-2*t));
   const size=Math.min(w*.205,h*.205),camera=26,project=p=>[w*.5+p[0]*size*camera/(camera-p[2]),h*.47-p[1]*size*camera/(camera-p[2])];
   ctx.save();ctx.translate(w*.5,h*.92);ctx.scale(1,.14);const shadow=ctx.createRadialGradient(0,0,0,0,0,size*2);shadow.addColorStop(0,'#0009');shadow.addColorStop(1,'#0000');ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(0,0,size*2,0,Math.PI*2);ctx.fill();ctx.restore();
-  // Continuous rounded backing sits behind separate hexagonal plates.
-  const sphereRadius=size*Math.sqrt(5),sphere=ctx.createRadialGradient(w*.5-sphereRadius*.35,h*.47-sphereRadius*.45,sphereRadius*.08,w*.5,h*.47,sphereRadius);
-  sphere.addColorStop(0,'#b2afb7');sphere.addColorStop(.46,'#55535c');sphere.addColorStop(.85,'#26252d');sphere.addColorStop(1,'#96929d');ctx.beginPath();ctx.arc(w*.5,h*.47,sphereRadius,0,Math.PI*2);ctx.fillStyle=sphere;ctx.fill();
   const ordered=faces.map(f=>({...f,rn:rotate(f.n,q),rc:rotate(f.c,q),rp:f.points.map(p=>rotate(p,q))})).filter(f=>dot(f.rn,[-f.rc[0],-f.rc[1],camera-f.rc[2]])>0).sort((a,b)=>a.rc[2]-b.rc[2]);
   for(const face of ordered){const points=face.rp.map(project),light=Math.max(0,dot(face.rn,norm([-.6,.8,1]))),isHex=face.points.length===6;
    const metal=Math.round(105+light*105);
