@@ -5,18 +5,15 @@
  const reduced=matchMedia('(prefers-reduced-motion: reduce)'),labels=['車を買う','車を売る','車検','整備・修理','ロードサービス','洗車・コーティング'];
  const en=['BUY','SELL','INSPECTION','MAINTENANCE','ROADSIDE','CAR CARE'];
  const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],norm=a=>{const l=Math.hypot(...a);return a.map(v=>v/l)},add=(a,b)=>a.map((v,i)=>v+b[i]);
- // Truncated icosahedron: 20 larger hexagons and 12 pentagons, closed without gaps.
- const phi=(1+Math.sqrt(5))/2,original=[];
- for(let zero=0;zero<3;zero++)for(const a of [-1,1])for(const b of [-phi,phi]){const p=[0,0,0];p[(zero+1)%3]=a;p[(zero+2)%3]=b;original.push(p)}
- const distance=(a,b)=>Math.hypot(...a.map((x,i)=>x-b[i])),neighbors=original.map((a,i)=>original.map((b,j)=>Math.abs(distance(a,b)-2)<1e-7?j:-1).filter(j=>j>=0));
- const vertices=[],directed=new Map(),faces=[];
- const unscaled=original[0].map((x,i)=>(2*x+original[neighbors[0][0]][i])/3),radiusScale=Math.sqrt(5)/Math.hypot(...unscaled);
- for(let i=0;i<12;i++)for(const j of neighbors[i]){const p=original[i].map((x,a)=>(2*x+original[j][a])*radiusScale/3);directed.set(i+','+j,p);vertices.push(p)}
- const makeFace=points=>{const c=points[0].map((_,i)=>points.reduce((sum,p)=>sum+p[i],0)/points.length),n=norm(c),v=norm(points[0].map((x,i)=>x-c[i])),u=cross(v,n);points.sort((a,b)=>Math.atan2(dot(a,v),dot(a,u))-Math.atan2(dot(b,v),dot(b,u)));faces.push({n,c,u,v,points,index:-1})};
- for(let i=0;i<12;i++)for(let j=i+1;j<12;j++)for(let k=j+1;k<12;k++)if(neighbors[i].includes(j)&&neighbors[i].includes(k)&&neighbors[j].includes(k))makeFace([[i,j],[j,i],[j,k],[k,j],[k,i],[i,k]].map(([a,b])=>directed.get(a+','+b)));
- for(let i=0;i<12;i++)makeFace(neighbors[i].map(j=>directed.get(i+','+j)));
- const selected=[[0,0,1],[1,0,0],[0,1,0],[-1,0,0],[0,-1,0],[0,0,-1]];
- selected.forEach((direction,index)=>{let candidate;for(const face of faces)if(face.points.length===6&&face.index<0&&(!candidate||dot(face.n,direction)>dot(candidate.n,direction)))candidate=face;candidate.index=index});
+ const vertices=[];for(let zero=0;zero<3;zero++)for(const swap of [false,true])for(const a of [-1,1])for(const b of [-2,2]){const v=[0,0,0],other=[0,1,2].filter(i=>i!==zero);v[other[0]]=swap?b:a;v[other[1]]=swap?a:b;vertices.push(v)}
+ const normals=[];for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])normals.push([x,y,z]);
+ const selected=[[1,-1,1],[-1,-1,1],[-1,1,1],[1,1,1],[1,1,-1],[1,-1,-1]];
+ const faces=[...normals,...[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]].map(raw=>{
+  const limit=raw.filter(Boolean).length===3?3:2,n=norm(raw),c=n.map(v=>v*limit/Math.hypot(...raw));
+  const u=norm(cross(Math.abs(n[1])>.9?[1,0,0]:[0,1,0],n)),v=cross(n,u);
+  const points=vertices.filter(p=>Math.abs(dot(p,raw)-limit)<.001).sort((a,b)=>Math.atan2(dot(a,v),dot(a,u))-Math.atan2(dot(b,v),dot(b,u)));
+  return {n,c,u,v,points,index:selected.findIndex(s=>s.every((x,i)=>x===raw[i]))};
+ });
  const matrixQuaternion=m=>{
   const trace=m[0]+m[4]+m[8];let x,y,z,w,s;
   if(trace>0){s=2*Math.sqrt(trace+1);w=s/4;x=(m[7]-m[5])/s;y=(m[2]-m[6])/s;z=(m[3]-m[1])/s}
@@ -35,38 +32,27 @@
   if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr)}
   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
   const step=Math.min(4,Math.floor(value*5)),t=value===1?1:value*5-step,q=slerp(orientations[step],orientations[step+1],t*t*(3-2*t));
-  const size=Math.min(w*.205,h*.205),camera=26,project=p=>[w*.5+p[0]*size*camera/(camera-p[2]),h*.47-p[1]*size*camera/(camera-p[2])];
+  const size=Math.min(w*.19,h*.19),camera=10,project=p=>[w*.5+p[0]*size*camera/(camera-p[2]),h*.47-p[1]*size*camera/(camera-p[2])];
   ctx.save();ctx.translate(w*.5,h*.92);ctx.scale(1,.14);const shadow=ctx.createRadialGradient(0,0,0,0,0,size*2);shadow.addColorStop(0,'#0009');shadow.addColorStop(1,'#0000');ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(0,0,size*2,0,Math.PI*2);ctx.fill();ctx.restore();
-  const ordered=faces.map(f=>({...f,rn:rotate(f.n,q),rc:rotate(f.c,q),rp:f.points.map(p=>rotate(p,q))})).filter(f=>dot(f.rn,[-f.rc[0],-f.rc[1],camera-f.rc[2]])>0).sort((a,b)=>a.rc[2]-b.rc[2]);
-  for(const face of ordered){const points=face.rp.map(project),light=Math.max(0,dot(face.rn,norm([-.6,.8,1])));
-   const metal=Math.round(105+light*105);
-   const reflection=dot(face.rn,norm([-.25,.35,1]));
-   const glint=Math.pow(Math.max(0,reflection),18)*65;
+  const ordered=faces.map(f=>({...f,rn:rotate(f.n,q),rc:rotate(f.c,q),rp:f.points.map(p=>rotate(p,q))})).filter(f=>f.rn[2]>.01).sort((a,b)=>a.rc[2]-b.rc[2]);
+  for(const face of ordered){const points=face.rp.map(project),light=Math.max(0,dot(face.rn,norm([-.6,.8,1]))),isHex=face.points.length===6;
+   const metal=Math.round((isHex?125:65)+light*(isHex?95:85));
    const silver=(offset)=>{const v=Math.max(28,Math.min(250,metal+offset));return `rgb(${v},${v},${Math.min(255,v+3)})`};
-   // A shared environment reflection follows each facet's true normal.
-   const angle=Math.atan2(face.rn[1],face.rn[0])*.22,reach=Math.min(w,h)*.48;
-   const gradient=ctx.createLinearGradient(w*.5-Math.cos(angle)*reach,h*.42-Math.sin(angle)*reach,w*.5+Math.cos(angle)*reach,h*.42+Math.sin(angle)*reach);
-   gradient.addColorStop(0,silver(40));gradient.addColorStop(.18,silver(12));gradient.addColorStop(.36,silver(-72));gradient.addColorStop(.44,silver(-34));gradient.addColorStop(.49,silver(46+glint));gradient.addColorStop(.55,silver(20+glint));gradient.addColorStop(.73,silver(-24));gradient.addColorStop(1,silver(42));
+   const gradient=ctx.createLinearGradient(w*.12,h*.1,w*.85,h*.9);
+   gradient.addColorStop(0,silver(35));gradient.addColorStop(.24,silver(12));gradient.addColorStop(.43,silver(-42));gradient.addColorStop(.52,silver(40));gradient.addColorStop(.63,silver(20));gradient.addColorStop(1,silver(-30));
    ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.fillStyle=gradient;ctx.fill();
-   // Shared vertices form a closed solid. A matching-colour stroke seals subpixel
-   // rasterisation cracks without drawing a separate border or recessed bevel.
-   ctx.strokeStyle=gradient;ctx.lineWidth=.8;ctx.lineJoin='round';ctx.stroke();
-   const center=project(face.rc);
-   if(face.rn[2]<.15)continue;
+   ctx.strokeStyle=isHex?'#f5f3f7d9':'#bdbbc2a0';ctx.lineWidth=isHex?1.5:1;ctx.stroke();
+   // Inset bevel catches the light, while the darker connector faces give depth.
+   const center=project(face.rc);ctx.beginPath();points.forEach((p,i)=>{const x=center[0]+(p[0]-center[0])*.975,y=center[1]+(p[1]-center[1])*.975;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath();ctx.strokeStyle=light>.5?'#ffffff70':'#35323966';ctx.lineWidth=.7;ctx.stroke();
+   if(!isHex||face.rn[2]<.23)continue;
    // Clip in screen space BEFORE transforming text into the face's local plane.
    ctx.save();ctx.beginPath();points.forEach((p,i)=>{const x=center[0]+(p[0]-center[0])*.89,y=center[1]+(p[1]-center[1])*.89;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath();ctx.clip();
    const c=project(face.rc),u=project(rotate(add(face.c,face.u),q)),v=project(rotate(add(face.c,face.v),q));ctx.transform(u[0]-c[0],u[1]-c[1],c[0]-v[0],c[1]-v[1],c[0],c[1]);ctx.textAlign='center';ctx.textBaseline='middle';
-   const faceRadius=Math.hypot(...face.points[0].map((v,i)=>v-face.c[i]));
-   const labelScale=faceRadius/Math.SQRT2;if(face.index>=0)ctx.scale(labelScale,labelScale);
    const fitText=(text,y,size,weight=600,maxWidth=1.5)=>{ctx.font=`${weight} ${size}px Arial,"Noto Sans JP",sans-serif`;const measured=ctx.measureText(text).width;if(measured>maxWidth)ctx.font=`${weight} ${size*maxWidth/measured}px Arial,"Noto Sans JP",sans-serif`;ctx.fillText(text,0,y)};
-   if(face.index>=0){const i=face.index;ctx.fillStyle=metal<160?'#e0dce4':'#59575c';fitText('0'+(i+1)+' / '+en[i],-.48,.22,500,1.45);ctx.fillStyle=metal<160?'#f4f1f6':'#353338';
-    if(i===4){fitText('ロード',-.06,.27);fitText('サービス',.22,.27)}else if(i===5){fitText('洗車・',-.06,.27);fitText('コーティング',.22,.25)}else fitText(labels[i],.06,.33);
-    ctx.strokeStyle='#514e5650';ctx.lineWidth=.016;ctx.beginPath();ctx.moveTo(-.45,.66);ctx.lineTo(.45,.66);ctx.stroke();
-   }else if(logo.complete&&logo.naturalWidth){
-    // Fit the mark inside both hexagonal and smaller square facets.
-    const inradius=faceRadius*Math.cos(Math.PI/face.points.length),extent=inradius*.59;
-    ctx.save();ctx.shadowColor='#111018aa';ctx.shadowBlur=1.3;ctx.drawImage(logo,-extent,-extent,extent*2,extent*2);ctx.restore();
-   }ctx.restore();
+   if(face.index>=0){const i=face.index;ctx.fillStyle='#59575c';fitText('0'+(i+1)+' / '+en[i],-.48,.22,500,1.45);ctx.fillStyle='#353338';
+    if(i===4){fitText('ロード',-.06,.31);fitText('サービス',.3,.31)}else if(i===5){fitText('洗車・',-.06,.3);fitText('コーティング',.3,.3)}else fitText(labels[i],.06,.33);
+    ctx.strokeStyle='#514e5650';ctx.lineWidth=.016;ctx.beginPath();ctx.moveTo(-.45,.68);ctx.lineTo(.45,.68);ctx.stroke();
+   }else if(logo.complete&&logo.naturalWidth){ctx.drawImage(logo,-.72,-.72,1.44,1.44)}ctx.restore();
   }
 
  }
