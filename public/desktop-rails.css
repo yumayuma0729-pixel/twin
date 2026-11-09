@@ -127,3 +127,5 @@ header .logo .brand-wordmark{width:190px}
 footer .logo .brand-wordmark{width:170px}
 @media(max-width:767px){header .logo .brand-wordmark{width:160px}}
 @media(max-width:374px){header .logo .brand-wordmark{width:145px}}
+/* Keep the desktop menu at the trailing edge even when primary nav is hidden. */
+@media(min-width:768px){header .menu-button{margin-left:auto;flex-shrink:0}}
