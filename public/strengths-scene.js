@@ -11,7 +11,8 @@
  for(let a=0;a<3;a++)for(let b=0;b<3;b++)if(a!==b){const c=3-a-b;for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])vertices.push([coordinates[a]*x,coordinates[b]*y,coordinates[c]*z].map(v=>v*radiusScale))}
  const normals=[];for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])normals.push([x,y,z]);
  for(let zero=0;zero<3;zero++)for(const a of [-1,1])for(const b of [-1,1]){const n=[a,b];n.splice(zero,0,0);normals.push(n)}
- const selected=[[1,-1,1],[-1,-1,1],[-1,1,1],[1,1,1],[1,1,-1],[1,-1,-1]];
+ // The six largest (octagonal) faces carry the six strengths.
+ const selected=[[0,0,1],[1,0,0],[0,1,0],[-1,0,0],[0,-1,0],[0,0,-1]];
  const faces=[...normals,...[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]].map(raw=>{
   const limit=Math.max(...vertices.map(p=>dot(p,raw))),n=norm(raw),c=n.map(v=>v*limit/Math.hypot(...raw));
   const u=norm(cross(Math.abs(n[1])>.9?[1,0,0]:[0,1,0],n)),v=cross(n,u);
