@@ -121,3 +121,9 @@ header .logo .brand-wordmark{display:block;width:244px;max-width:100%;height:aut
 @media(prefers-reduced-motion:reduce){.floating-contact button,.floating-contact button:before,.floating-contact .contact-symbol,.rail-contact-actions>button,.rail-contact-actions>button:before,.rail-contact-actions .rail-channel-icon{animation:none!important}.floating-contact button:before{display:none}}
 
 footer .logo .brand-wordmark{display:block;width:200px;max-width:100%;height:auto}
+
+/* TWIN-only signature, preserving the approved lettering and silver finish. */
+header .logo .brand-wordmark{width:190px}
+footer .logo .brand-wordmark{width:170px}
+@media(max-width:767px){header .logo .brand-wordmark{width:160px}}
+@media(max-width:374px){header .logo .brand-wordmark{width:145px}}
