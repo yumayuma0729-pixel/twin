@@ -1,7 +1,9 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const source=fs.readFileSync('public/strengths-scene.js','utf8');
 const canvas={getContext:()=>({})},section={querySelector:()=>canvas,querySelectorAll:()=>[]};
-const {faces}=vm.runInNewContext(source.slice(0,source.indexOf(' const matrixQuaternion='))+'return {faces};})();',{document:{querySelector:()=>section},matchMedia:()=>({matches:false})});
-assert.equal(faces.length,26);assert.equal(faces.filter(f=>f.index>=0).length,6);assert.equal(faces.filter(f=>f.index<0).length,20);
-for(const face of faces){assert.equal(face.points.length,6);const distances=face.points.map(p=>Math.hypot(...p.map((x,i)=>x-face.c[i])));assert(Math.max(...distances)-Math.min(...distances)<1e-7);const edges=face.points.map((p,i)=>Math.hypot(...p.map((x,j)=>x-face.points[(i+1)%6][j])));assert(Math.max(...edges)-Math.min(...edges)<1e-7);assert(face.points.every(p=>Math.abs(p.reduce((n,x,i)=>n+(x-face.c[i])*face.n[i],0))<1e-7));}
-console.log('PASS: all 26 panels are planar regular hexagons; 6 strengths and 20 logo panels');
+const {faces,vertices}=vm.runInNewContext(source.slice(0,source.indexOf(' const matrixQuaternion='))+'return {faces,vertices};})();',{document:{querySelector:()=>section},matchMedia:()=>({matches:false})});
+assert.equal(vertices.length,12);assert.equal(faces.length,20);assert.equal(faces.filter(f=>f.index>=0).length,6);assert.equal(faces.filter(f=>f.index<0).length,14);
+const key=p=>p.map(x=>x.toFixed(7)).join(','),edges=new Map(),lengths=[];
+for(const f of faces){assert.equal(f.points.length,3);for(let i=0;i<3;i++){const a=f.points[i],b=f.points[(i+1)%3],edge=[key(a),key(b)].sort().join('|');edges.set(edge,(edges.get(edge)||0)+1);lengths.push(Math.hypot(...a.map((v,j)=>v-b[j])))}assert(f.n.reduce((sum,x,i)=>sum+x*f.c[i],0)>0)}
+assert.equal(edges.size,30);assert([...edges.values()].every(n=>n===2),'Each edge must join two faces');assert(Math.max(...lengths)-Math.min(...lengths)<1e-7,'Edges must be equal');assert(vertices.every(p=>Math.abs(Math.hypot(...p)-Math.sqrt(5))<1e-7));assert.equal(vertices.length-edges.size+faces.length,2);
+console.log('PASS: closed regular icosahedron, 12 spherical vertices / 30 equal edges / 20 triangles; 6 strengths / 14 logos');

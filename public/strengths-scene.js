@@ -5,20 +5,22 @@
  const reduced=matchMedia('(prefers-reduced-motion: reduce)'),labels=['車を買う','車を売る','車検','整備・修理','ロードサービス','洗車・コーティング'];
  const en=['BUY','SELL','INSPECTION','MAINTENANCE','ROADSIDE','CAR CARE'];
  const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],norm=a=>{const l=Math.hypot(...a);return a.map(v=>v/l)},add=(a,b)=>a.map((v,i)=>v+b[i]);
- // Freestanding hexagonal metal panels; no circular backing or outer ring.
- const coordinates=[1,1+Math.SQRT2,1+2*Math.SQRT2],radiusScale=Math.sqrt(5)/Math.hypot(...coordinates),vertices=[];
- for(let a=0;a<3;a++)for(let b=0;b<3;b++)if(a!==b){const c=3-a-b;for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])vertices.push([coordinates[a]*x,coordinates[b]*y,coordinates[c]*z].map(v=>v*radiusScale))}
- const normals=[];for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])normals.push([x,y,z]);
- for(let zero=0;zero<3;zero++)for(const a of [-1,1])for(const b of [-1,1]){const n=[a,b];n.splice(zero,0,0);normals.push(n)}
- const selected=[[1,-1,1],[-1,-1,1],[-1,1,1],[1,1,1],[1,1,-1],[1,-1,-1]];
- const faces=[...normals,...[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]].map(raw=>{
-  const limit=Math.max(...vertices.map(p=>dot(p,raw))),n=norm(raw),c=n.map(v=>v*limit/Math.hypot(...raw));
-  const u=norm(cross(Math.abs(n[1])>.9?[1,0,0]:[0,1,0],n)),v=cross(n,u);
-  const points=vertices.filter(p=>Math.abs(dot(p,raw)-limit)<.001).sort((a,b)=>Math.atan2(dot(a,v),dot(a,u))-Math.atan2(dot(b,v),dot(b,u)));
-  const panelRadius=Math.hypot(...points[0].map((x,i)=>x-c[i]))*Math.cos(Math.PI/points.length)*.96;
-  const hexPoints=Array.from({length:6},(_,i)=>{const angle=Math.PI/6+i*Math.PI/3;return c.map((x,j)=>x+panelRadius*(u[j]*Math.cos(angle)+v[j]*Math.sin(angle)))});
-  return {n,c,u,v,points:hexPoints,index:selected.findIndex(s=>s.every((x,i)=>x===raw[i]))};
- });
+ // Regular icosahedron: 12 vertices, 30 equal edges, 20 triangular faces.
+ const phi=(1+Math.sqrt(5))/2,radiusScale=Math.sqrt(5)/Math.hypot(1,phi),vertices=[];
+ for(let zero=0;zero<3;zero++)for(const a of [-1,1])for(const b of [-phi,phi]){const p=[0,0,0];p[(zero+1)%3]=a*radiusScale;p[(zero+2)%3]=b*radiusScale;vertices.push(p)}
+ const edge=2*radiusScale,faces=[];
+ const distance=(a,b)=>Math.hypot(...a.map((x,i)=>x-b[i]));
+ for(let i=0;i<12;i++)for(let j=i+1;j<12;j++)for(let k=j+1;k<12;k++){
+  const points=[vertices[i],vertices[j],vertices[k]];if(![distance(points[0],points[1]),distance(points[1],points[2]),distance(points[2],points[0])].every(d=>Math.abs(d-edge)<1e-7))continue;
+  const c=points[0].map((_,a)=>(points[0][a]+points[1][a]+points[2][a])/3);
+  let n=norm(cross(points[1].map((x,a)=>x-points[0][a]),points[2].map((x,a)=>x-points[0][a])));if(dot(n,c)<0)n=n.map(x=>-x);
+  // A vertex points upward when this face is presented, keeping its label upright.
+  const v=norm(points[0].map((x,a)=>x-c[a])),u=cross(v,n);
+  points.sort((a,b)=>Math.atan2(dot(a,v),dot(a,u))-Math.atan2(dot(b,v),dot(b,u)));
+  faces.push({n,c,u,v,points,index:-1});
+ }
+ const selected=[[0,0,1],[1,0,0],[0,1,0],[-1,0,0],[0,-1,0],[0,0,-1]];
+ selected.forEach((direction,index)=>{let candidate;for(const face of faces)if(face.index<0&&(!candidate||dot(face.n,direction)>dot(candidate.n,direction)))candidate=face;candidate.index=index});
  const matrixQuaternion=m=>{
   const trace=m[0]+m[4]+m[8];let x,y,z,w,s;
   if(trace>0){s=2*Math.sqrt(trace+1);w=s/4;x=(m[7]-m[5])/s;y=(m[2]-m[6])/s;z=(m[3]-m[1])/s}
@@ -59,13 +61,13 @@
    const c=project(face.rc),u=project(rotate(add(face.c,face.u),q)),v=project(rotate(add(face.c,face.v),q));ctx.transform(u[0]-c[0],u[1]-c[1],c[0]-v[0],c[1]-v[1],c[0],c[1]);ctx.textAlign='center';ctx.textBaseline='middle';
    const faceRadius=Math.hypot(...face.points[0].map((v,i)=>v-face.c[i]));
    const labelScale=faceRadius/Math.SQRT2;if(face.index>=0)ctx.scale(labelScale,labelScale);
-   const fitText=(text,y,size,weight=600,maxWidth=1.5)=>{ctx.font=`${weight} ${size}px Arial,"Noto Sans JP",sans-serif`;const measured=ctx.measureText(text).width;if(measured>maxWidth)ctx.font=`${weight} ${size*maxWidth/measured}px Arial,"Noto Sans JP",sans-serif`;ctx.fillText(text,0,y)};
-   if(face.index>=0){const i=face.index;ctx.fillStyle=metal<160?'#e0dce4':'#59575c';fitText('0'+(i+1)+' / '+en[i],-.48,.22,500,1.45);ctx.fillStyle=metal<160?'#f4f1f6':'#353338';
-    if(i===4){fitText('ロード',-.06,.31);fitText('サービス',.3,.31)}else if(i===5){fitText('洗車・',-.06,.3);fitText('コーティング',.3,.3)}else fitText(labels[i],.06,.33);
-    ctx.strokeStyle='#514e5650';ctx.lineWidth=.016;ctx.beginPath();ctx.moveTo(-.45,.68);ctx.lineTo(.45,.68);ctx.stroke();
+   const fitText=(text,y,size,weight=600,maxWidth=1.22)=>{ctx.font=`${weight} ${size}px Arial,"Noto Sans JP",sans-serif`;const measured=ctx.measureText(text).width;if(measured>maxWidth)ctx.font=`${weight} ${size*maxWidth/measured}px Arial,"Noto Sans JP",sans-serif`;ctx.fillText(text,0,y)};
+   if(face.index>=0){const i=face.index;ctx.translate(0,.16);ctx.fillStyle=metal<160?'#e0dce4':'#59575c';fitText('0'+(i+1)+' / '+en[i],-.36,.19,500,.95);ctx.fillStyle=metal<160?'#f4f1f6':'#353338';
+    if(i===4){fitText('ロード',-.06,.27);fitText('サービス',.22,.27)}else if(i===5){fitText('洗車・',-.06,.27);fitText('コーティング',.22,.25)}else fitText(labels[i],.06,.33);
+    ctx.strokeStyle='#514e5650';ctx.lineWidth=.016;ctx.beginPath();ctx.moveTo(-.3,.43);ctx.lineTo(.3,.43);ctx.stroke();
    }else if(logo.complete&&logo.naturalWidth){
     // Fit the mark inside both hexagonal and smaller square facets.
-    const inradius=faceRadius*Math.cos(Math.PI/face.points.length),extent=inradius*.65;
+    const inradius=faceRadius*Math.cos(Math.PI/face.points.length),extent=inradius*.59;
     ctx.save();ctx.shadowColor='#111018aa';ctx.shadowBlur=1.3;ctx.drawImage(logo,-extent,-extent,extent*2,extent*2);ctx.restore();
    }ctx.restore();
   }
