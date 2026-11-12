@@ -2,7 +2,7 @@
 declare(strict_types=1);
 const CONTENT_LABELS=['vehicle'=>'在庫車','story'=>'カーストーリー','news'=>'お知らせ','column'=>'コラム'];
 require_once __DIR__.'/discovery.php';
-const INQUIRY_LABELS=['general'=>'一般相談','vehicle'=>'車両のお問い合わせ','visit'=>'来店相談','order'=>'注文販売','appraisal'=>'買取・下取り','inspection'=>'車検','maintenance'=>'整備・修理','road'=>'ロードサービス'];
+const INQUIRY_LABELS=['general'=>'一般相談','vehicle'=>'車両のお問い合わせ','visit'=>'来店相談','order'=>'注文販売','appraisal'=>'買取・下取り','inspection'=>'車検','maintenance'=>'整備・修理','rental'=>'レンタカー・リース','road'=>'ロードサービス'];
 function default_content(string $type): array {return ['title'=>'','slug'=>'','body'=>'','summary'=>'','seo_title'=>'','description'=>'','category'=>'','author'=>'','related_ids'=>[],'media_ids'=>[],'indexable'=>false,'is_sample'=>false,'consent_checked'=>false,'maker'=>'','model'=>'','grade'=>'','year'=>'','km'=>'','body_price'=>'','fees'=>'','total'=>'','price_condition'=>'','inspection'=>'','repair_history'=>'unknown','transmission'=>'AT','color'=>'','sale_status'=>'available','featured'=>false,'tags'=>[],'auto_tags'=>true,'target_region'=>in_array($type,['column','vehicle'],true)?'taisho':'','answer_summary'=>'','key_points'=>'','faq_text'=>'','sources_text'=>'','reviewed_on'=>'','equipment'=>array_fill_keys(array_keys(EQUIPMENT_LABELS),null)];}
 function posted_content(string $type): array {
  $d=default_content($type);

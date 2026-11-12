@@ -10,7 +10,7 @@
  if(allowed.includes(params.get('type')))type.value=params.get('type');
  const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());date.min=today;dateAlt.min=today;
  let selectedVehicle='';
- const updateType=()=>{const isVisit=type.value==='visit';visit.hidden=!isVisit;visit.disabled=!isVisit;date.required=isVisit;message.placeholder=type.value==='order'?'希望車種・総額予算・用途・必要な時期など':isVisit?'ご来店の目的・気になる車・事前に確認したいことなど':'気になる車種・ご予算・用途・確認したいことなど';};
+ const updateType=()=>{const isVisit=type.value==='visit';visit.hidden=!isVisit;visit.disabled=!isVisit;date.required=isVisit;message.placeholder=type.value==='rental'?'軽貨物・乗用車のご希望、利用開始日、期間、用途、走行距離の目安など':type.value==='order'?'希望車種・総額予算・用途・必要な時期など':isVisit?'ご来店の目的・気になる車・事前に確認したいことなど':'気になる車種・ご予算・用途・確認したいことなど';};
  const updateReply=()=>{const required=reply.value==='phone';phone.required=required;const label=document.querySelector('#phone-required-label');label.textContent=required?'必須':'任意';label.className=required?'required-label':'optional-label';};
  type.addEventListener('change',updateType);reply.addEventListener('change',updateReply);message.addEventListener('input',()=>document.querySelector('#message-count').textContent=message.value.length+' / 3000');
  const addRow=(label,value)=>{const row=document.createElement('div');const dt=document.createElement('dt');const dd=document.createElement('dd');dt.textContent=label;dd.textContent=value||'未入力';row.append(dt,dd);list.append(row);};

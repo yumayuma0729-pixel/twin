@@ -3,6 +3,7 @@ declare(strict_types=1);
 function route_request(): void {
  $path=rawurldecode((string)parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH));
  if(str_contains($path,"\0")||str_contains($path,'..')||str_contains($path,'\\'))abort_request(404,'ページが見つかりません。');
+ if($path==='/buy'||str_starts_with($path,'/buy/')){header('Location: /stock/',true,301);exit;}
  if($path==='/admin')redirect('/admin/');
  if(str_starts_with($path,'/admin/')){route_admin($path);return;}
  if(preg_match('#^/media/([1-9][0-9]*)/?$#',$path,$m)){
@@ -39,7 +40,7 @@ function render_listing(string $type): void {
  $body='<section class="cms-public-list section"><span class="eyebrow">'.strtoupper($type).'</span><h1>'.e($title).'</h1>';
  if($type==='vehicle')$body.='<nav class="cms-category-nav" aria-label="車種カテゴリ"><a href="/stock/">すべて</a><a href="/stock/?category=kei">軽自動車</a><a href="/stock/?category=commercial">商用車・トラック</a><a href="/stock/?category=passenger">乗用車</a></nav><details class="cms-public-refine"><summary>条件を変更する</summary><form><div>'.input_field('keyword','キーワード',$_GET['keyword']??'').select_field('category','カテゴリ',[''=>'すべて','kei'=>'軽自動車','commercial'=>'商用車・トラック','passenger'=>'乗用車'],$_GET['category']??'').select_field('price','価格',[''=>'すべて','under100'=>'100万円未満','100to150'=>'100〜150万円','over150'=>'150万円超'],$_GET['price']??'').select_field('sort','並び順',['newest'=>'新着順','price-asc'=>'安い順','price-desc'=>'高い順'],$_GET['sort']??'').'</div><button class="button dark">条件を適用 →</button></form></details>';
  $body.='<p>'.count($rows).'件の公開情報</p>'.($rows?public_cards($rows):'<div class="cms-public-empty"><h2>現在、公開中の'.e(CONTENT_LABELS[$type]).'はありません。</h2><p>準備ができ次第ご案内します。</p></div>');
- if($type==='vehicle')$body.='<section class="inventory-order"><div><span class="eyebrow">ORDER YOUR CAR</span><h2>ご希望の車種も、掲載にない一台も。</h2><p>注文販売についてもご相談いただけます。</p></div><a class="button dark" href="/buy/#order">注文販売へ ↗</a></section>';
+ if($type==='vehicle')$body.='<section class="inventory-order"><div><span class="eyebrow">ORDER YOUR CAR</span><h2>ご希望の車種も、掲載にない一台も。</h2><p>注文販売についてもご相談いただけます。</p></div></section>';
  $body.='</section>';render_shell($title,'Twin Assistの'.CONTENT_LABELS[$type].'をご案内します。',$body,'/'.['vehicle'=>'stock','story'=>'story','news'=>'news','column'=>'column'][$type].'/',false);
 }
 function render_home(): void {

@@ -129,3 +129,8 @@ footer .logo .brand-wordmark{width:170px}
 @media(max-width:374px){header .logo .brand-wordmark{width:145px}}
 /* Keep the desktop menu at the trailing edge even when primary nav is hidden. */
 @media(min-width:768px){header .menu-button{margin-left:auto;flex-shrink:0}}
+/* Shared six-service navigation and text-only custom-order guidance. */
+.order-sales-copy{font-size:14px;line-height:1.9;color:inherit;margin-top:16px}
+.inventory-order>.order-sales-copy{max-width:270px;color:#d4d4d4}
+@media(min-width:1600px){.has-desktop-rails header nav{gap:12px;font-size:12px;white-space:nowrap}.has-desktop-rails header{gap:20px}}
+@media(max-width:767px){.inventory-order>.order-sales-copy{max-width:none}.order-sales-copy{font-size:13px}}
