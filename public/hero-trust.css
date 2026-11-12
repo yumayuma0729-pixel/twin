@@ -1,0 +1,18 @@
+/* The supplied promise is presented in full, as one main-visual composition. */
+.hero.hero-trust{height:auto;min-height:0;overflow:hidden;background:#14171a;color:#f6f4f0}
+.hero-trust-visual{position:relative;min-height:545px;display:flex;align-items:center;isolation:isolate}
+.hero-trust .hero-art{background-position:61% center}
+.hero-trust .hero-art:after{background:linear-gradient(90deg,#101316b8,transparent 92%),linear-gradient(0deg,#14171a,transparent 48%)}
+.hero-trust .hero-content{padding:85px 40px 75px;width:100%;position:relative;z-index:1}
+.hero-trust h1{font-size:clamp(34px,4vw,49px);font-style:normal;letter-spacing:.045em;line-height:1.7;margin:0 0 25px;text-shadow:0 2px 16px #0005}
+.hero-trust .hero-trust-tagline{font-family:'Yu Mincho',serif;font-size:24px;line-height:1.6;font-weight:500;letter-spacing:.06em;margin:0 0 17px;color:#f2efeb}
+.hero-trust .hero-trust-first{font-size:14px;line-height:1.9;letter-spacing:.035em;color:#e0dcd9;max-width:440px}
+.hero-manifesto{position:relative;display:grid;grid-template-columns:.65fr 1.35fr;gap:35px;padding:24px 40px 110px;background:radial-gradient(ellipse at 5% 25%,#47485228,transparent 65%),#14171a}
+.hero-manifesto-brand .eyebrow{font-size:10px;letter-spacing:.13em;color:#92919a;line-height:1.9;margin-top:4px}
+.hero-manifesto-brand img{display:block;width:105px;height:105px;object-fit:contain;margin-top:30px;opacity:.8}
+.hero-trust .hero-manifesto-copy p{font-size:14px;line-height:2;letter-spacing:.025em;color:#bfc0c5;margin:0 0 17px;text-shadow:none}
+.hero-trust .hero-manifesto-copy .hero-trust-closing{color:#d2d2d7;margin:25px 0 0;line-height:2.2}
+.hero-trust-closing strong{font-weight:500;color:#f1eff4;font-size:16px}
+.hero-trust .hero-sign{display:block;color:#eae7e1;font-size:30px;margin-top:20px;line-height:1.4;transform:rotate(-2deg)}
+@media(max-width:767px){.hero-trust-visual{min-height:465px;align-items:flex-end}.hero-trust .hero-art{background-position:65% center}.hero-trust .hero-art:after{background:linear-gradient(90deg,#1013168a,transparent 95%),linear-gradient(0deg,#14171a,transparent 85%)}.hero-trust .hero-content{padding:100px 24px 32px}.hero-trust h1{font-size:32px;line-height:1.75;letter-spacing:.035em;margin:0 0 20px}.hero-trust .hero-trust-tagline{font-size:21px;margin-bottom:14px}.hero-trust .hero-trust-first{font-size:13px;line-height:1.9;max-width:285px}.hero-manifesto{grid-template-columns:1fr;gap:23px;padding:23px 24px 85px}.hero-manifesto-brand{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #b5afb72b;padding-top:20px}.hero-manifesto-brand .eyebrow{font-size:9px;letter-spacing:.12em;margin:0}.hero-manifesto-brand img{width:43px;height:43px;margin:0;opacity:.85}.hero-trust .hero-manifesto-copy p{font-size:14px;line-height:1.95;letter-spacing:.01em;margin-bottom:17px}.hero-trust .hero-manifesto-copy .hero-trust-closing{margin-top:22px;font-size:13px;line-height:2.1}.hero-trust-closing strong{font-size:15px;line-height:1.9}.hero-trust .hero-sign{font-size:29px;margin-top:18px}}
+@media(max-width:374px){.hero-trust h1{font-size:29px}.hero-trust .hero-content{padding-left:21px;padding-right:21px}.hero-manifesto{padding-left:21px;padding-right:21px}.hero-trust .hero-manifesto-copy p{font-size:13px}}
