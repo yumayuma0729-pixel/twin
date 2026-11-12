@@ -12,3 +12,13 @@
 .hero-trust .hero-sign{display:block;color:#f1ece7;font-size:30px;margin-top:18px;line-height:1.4;transform:rotate(-2deg)}
 @media(max-width:767px){.hero.hero-trust{min-height:0}.hero-trust .hero-art{background-position:64% center}.hero-trust .hero-art:after{background:linear-gradient(90deg,#101316d9,#1013168c),linear-gradient(0deg,#101316b8,transparent 90%)}.hero-trust .hero-content{padding:100px 24px 90px}.hero-trust h1{font-size:32px;line-height:1.7;letter-spacing:.035em;margin-bottom:22px}.hero-trust .hero-trust-tagline{font-size:21px;margin-bottom:18px}.hero-trust .hero-trust-first,.hero-trust .hero-trust-body p{font-size:14px;line-height:1.95;letter-spacing:.01em;margin-bottom:16px;max-width:none}.hero-trust-closing strong{font-size:15px}.hero-trust .hero-trust-body .hero-trust-closing{margin-top:23px;font-size:13px;line-height:2.1}.hero-trust .hero-sign{font-size:29px;margin-top:20px}}
 @media(max-width:374px){.hero-trust .hero-content{padding:90px 21px 85px}.hero-trust h1{font-size:29px}.hero-trust .hero-trust-first,.hero-trust .hero-trust-body p{font-size:13px}}
+/* Compact mobile leading and paragraph rhythm without reducing type size. */
+@media(max-width:767px){
+ .hero-trust .hero-content{padding-top:96px;padding-bottom:72px}
+ .hero-trust h1{line-height:1.45;margin-bottom:14px}
+ .hero-trust .hero-trust-tagline{line-height:1.5;margin-bottom:12px}
+ .hero-trust .hero-trust-first,.hero-trust .hero-trust-body p{line-height:1.7;margin-bottom:10px}
+ .hero-trust .hero-trust-body .hero-trust-closing{margin-top:14px;line-height:1.8}
+ .hero-trust .hero-sign{margin-top:12px;line-height:1.2}
+}
+@media(max-width:374px){.hero-trust .hero-content{padding-top:90px;padding-bottom:70px}}
