@@ -5,8 +5,8 @@
 - Requirements source: `TWIN_BASE_Requirements.md`, provided by the user.
 - Milk white `#FDFBF7`, cream `#F6EFE6`, mint `#DDEEE3`, blue `#DCE8F2`, peach `#F6E1D6`; text `#6F655D`.
 - Zen Maru Gothic Medium and M PLUS Rounded 1c Regular come from the official Google Fonts repository and are served locally as WOFF2. OFL copyright/license notices are in `public/twin-base/fonts/`.
-- Instagram and LINE are intentionally unset. Buttons display an accessible preparation dialog until confirmed official URLs are supplied. No invented accounts or collection forms.
-- Address is the supplied dog-run address, **not the car dealership's address**. Maps links to an address search; no fabricated coordinates, hours, prices or parking capacity.
+- Instagram is confirmed as `https://www.instagram.com/twinbase_dogrun?utm_source=qr`. LINE remains unset and opens an accessible preparation dialog. No invented accounts or collection forms.
+- Address is the supplied dog-run address, **not the car dealership's address**. Maps links to the user-confirmed `https://maps.app.goo.gl/CMuM3UB9zTNHnDWb7`; no fabricated coordinates, hours, prices or parking capacity.
 - Facilities with unconfirmed details are labelled; events are examples with no announced date or commitment. Structured data contains only supplied business identity, address and parent organization.
 - Preview remains `noindex,follow`, consistent with the current temporary site.
 
