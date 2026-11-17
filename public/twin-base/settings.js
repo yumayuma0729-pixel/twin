@@ -3,6 +3,7 @@ window.TWIN_BASE_SETTINGS=Object.freeze({
  instagramUrl:'https://www.instagram.com/twinbase_dogrun?utm_source=qr',
  lineUrl:'',
  logoPath:'',
- heroPhotoPath:'/twin-base/assets/hero-dogs.jpg',
+ heroPhotoPath:'',
+ dogrunPhotoPath:'/twin-base/assets/hero-dogs.jpg',
  facilityPhotoPath:''
 });

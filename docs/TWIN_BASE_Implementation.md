@@ -29,3 +29,7 @@ Set `instagramUrl` and `lineUrl` in `settings.js`. HTTPS Instagram and official 
 Run the zero-dependency preview server and `PREVIEW_URL=http://127.0.0.1:3003 node tests/twin-base.cjs`. Test mobile/desktop widths, menu/focus/Escape, missing social setup, reduced motion, no-JavaScript content, image configuration and social link configuration.
 
 After actual image delivery, check the transparent logo boundary at 1x/2x sizes, hero dog visibility at mobile widths, and repeat screenshots before calling the LP complete.
+
+## Photo placement correction — 2026-11-17
+
+The user clarified that the container facility/corgi landscape is the main visual. The uploaded HEIC of two dogs belongs to the artificial-turf dog-run feature. The dogs photo has been moved there, with its own `dogrunPhotoPath`. The hero returns to its landscape frame and an explicit photo placeholder while awaiting the original facility image file. The inline facility image can be seen in chat but still has no accessible original bytes. Earlier placement notes above are superseded by this correction.

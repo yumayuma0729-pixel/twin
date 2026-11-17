@@ -31,5 +31,5 @@
 /* The organic decorative shape may bleed to the frame, never beyond the viewport. */
 .tb-hero{overflow:hidden;overflow:clip}
 
-/* Portrait hero keeps both dogs and the supplied photograph intact. */
-.tb-media-hero{aspect-ratio:3/4;max-width:420px;margin-inline:auto}
+/* The hero uses the landscape facility photo; the run preserves both dogs. */
+.tb-feature-run .tb-media-arch{aspect-ratio:3/4;max-width:420px;width:100%}
