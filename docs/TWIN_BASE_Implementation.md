@@ -41,3 +41,7 @@ The user supplied the original 3240×2200 PNG in a ZIP. It is now the hero and t
 ## Rest feature photo — 2026-11-17
 
 The “ひと休みまで、楽しい時間に。” section now uses the supplied cherry-blossom/dog JPG from its ZIP, copied unchanged as `sakura-dog.jpg`. The centered 3:4 CSS frame displays the photograph area while hiding the screenshot’s black bars. The hero and dog-run photographs remain separate. Alt text describes the actual dog and cherry trees, not a terrace.
+
+## Usage rules and hours — 2026-11-17
+
+Confirmed by the user: small/medium dogs only; large dogs cannot use the run; vaccination certificate presentation is not required. Dog run operates 24 hours, café and staffed hours are 10:00–19:00. The previous Instagram-only hours notice is superseded; Instagram remains the source for changes. No assumption of 24-hour staffing, vaccination exemption, year-round operation, or weight thresholds is added.
