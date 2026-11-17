@@ -33,3 +33,7 @@ After actual image delivery, check the transparent logo boundary at 1x/2x sizes,
 ## Photo placement correction — 2026-11-17
 
 The user clarified that the container facility/corgi landscape is the main visual. The uploaded HEIC of two dogs belongs to the artificial-turf dog-run feature. The dogs photo has been moved there, with its own `dogrunPhotoPath`. The hero returns to its landscape frame and an explicit photo placeholder while awaiting the original facility image file. The inline facility image can be seen in chat but still has no accessible original bytes. Earlier placement notes above are superseded by this correction.
+
+## Facility image delivered — 2026-11-17
+
+The user supplied the original 3240×2200 PNG in a ZIP. It is now the hero and terrace image, optimised as `facility-hero.webp` without changing the composition. The built-in “イメージ写真” label is preserved. The hero has a static source for no-JavaScript display; its landscape frame and modest corner radius keep the building, corgi and label visible. The earlier facility-image blocker is resolved. The two-dog HEIC remains exclusively in the artificial-turf feature. The original logo is still pending.

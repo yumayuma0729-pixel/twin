@@ -33,3 +33,7 @@
 
 /* The hero uses the landscape facility photo; the run preserves both dogs. */
 .tb-feature-run .tb-media-arch{aspect-ratio:3/4;max-width:420px;width:100%}
+
+/* Preserve the supplied landscape and its image-photo label at every width. */
+.tb-media-hero{aspect-ratio:3240/2200;border-radius:24px;transform:none}
+.tb-media-hero img{object-fit:contain}
