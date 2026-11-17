@@ -45,3 +45,7 @@ The “ひと休みまで、楽しい時間に。” section now uses the suppli
 ## Usage rules and hours — 2026-11-17
 
 Confirmed by the user: small/medium dogs only; large dogs cannot use the run; vaccination certificate presentation is not required. Dog run operates 24 hours, café and staffed hours are 10:00–19:00. The previous Instagram-only hours notice is superseded; Instagram remains the source for changes. No assumption of 24-hour staffing, vaccination exemption, year-round operation, or weight thresholds is added.
+
+## Official LINE — 2026-11-17
+
+The user confirmed `https://lin.ee/OwGAOS5` for TWIN BASE. All four LINE buttons (mobile menu, guide, footer, mobile fixed CTA) now use that URL through the shared settings. This supersedes earlier LINE-pending notes for TWIN BASE only; TWIN ASSIST LINE remains pending.
