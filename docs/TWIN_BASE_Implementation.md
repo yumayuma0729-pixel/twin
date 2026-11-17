@@ -37,3 +37,7 @@ The user clarified that the container facility/corgi landscape is the main visua
 ## Facility image delivered — 2026-11-17
 
 The user supplied the original 3240×2200 PNG in a ZIP. It is now the hero and terrace image, optimised as `facility-hero.webp` without changing the composition. The built-in “イメージ写真” label is preserved. The hero has a static source for no-JavaScript display; its landscape frame and modest corner radius keep the building, corgi and label visible. The earlier facility-image blocker is resolved. The two-dog HEIC remains exclusively in the artificial-turf feature. The original logo is still pending.
+
+## Rest feature photo — 2026-11-17
+
+The “ひと休みまで、楽しい時間に。” section now uses the supplied cherry-blossom/dog JPG from its ZIP, copied unchanged as `sakura-dog.jpg`. The centered 3:4 CSS frame displays the photograph area while hiding the screenshot’s black bars. The hero and dog-run photographs remain separate. Alt text describes the actual dog and cherry trees, not a terrace.

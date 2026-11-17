@@ -5,5 +5,5 @@ window.TWIN_BASE_SETTINGS=Object.freeze({
  logoPath:'',
  heroPhotoPath:'/twin-base/assets/facility-hero.webp',
  dogrunPhotoPath:'/twin-base/assets/hero-dogs.jpg',
- facilityPhotoPath:'/twin-base/assets/facility-hero.webp'
+ facilityPhotoPath:'/twin-base/assets/sakura-dog.jpg'
 });
