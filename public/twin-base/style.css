@@ -30,3 +30,6 @@
 @media(max-width:767px){.tb-logo>img{width:110px;height:54px}.tb-status,.tb-event-board small{font-size:11px}}
 /* The organic decorative shape may bleed to the frame, never beyond the viewport. */
 .tb-hero{overflow:hidden;overflow:clip}
+
+/* Portrait hero keeps both dogs and the supplied photograph intact. */
+.tb-media-hero{aspect-ratio:3/4;max-width:420px;margin-inline:auto}

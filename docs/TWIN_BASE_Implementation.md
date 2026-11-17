@@ -6,27 +6,19 @@
 - Milk white `#FDFBF7`, cream `#F6EFE6`, mint `#DDEEE3`, blue `#DCE8F2`, peach `#F6E1D6`; text `#6F655D`.
 - Zen Maru Gothic Medium and M PLUS Rounded 1c Regular come from the official Google Fonts repository and are served locally as WOFF2. OFL copyright/license notices are in `public/twin-base/fonts/`.
 - Instagram is confirmed as `https://www.instagram.com/twinbase_dogrun?utm_source=qr`. LINE remains unset and opens an accessible preparation dialog. No invented accounts or collection forms.
-- Address is the supplied dog-run address, **not the car dealership's address**. Maps links to the user-confirmed `https://maps.app.goo.gl/CMuM3UB9zTNHnDWb7`; no fabricated coordinates, hours, prices or parking capacity.
-- Facilities with unconfirmed details are labelled; events are examples with no announced date or commitment. Structured data contains only supplied business identity, address and parent organization.
+- Address is the supplied dog-run address, **not the car dealership's address**. Maps links to the user-confirmed `https://maps.app.goo.gl/CMuM3UB9zTNHnDWb7`; no fabricated coordinates or opening hours. Confirmed on 2026-11-17: dog run 30 minutes / 500 yen, hours announced on Instagram, parking for 3 vehicles.
+- Unconfirmed facility-condition labels and the café-menu row were removed at the user’s request; events remain examples with no announced date or commitment. Structured data contains only supplied business identity, address and parent organization.
 - Preview remains `noindex,follow`, consistent with the current temporary site.
 
-## Assets still required
+## Photo update — 2026-11-17
 
-The text specification was downloaded as a file. The two inline images could be visually inspected in chat, but their original bytes were not exposed as downloadable files or workspace files. No synthetic copies have been substituted for the logo or facility photograph.
+The supplied `IMG_7466.HEIC` shows two dogs on the artificial-turf run. It is used as the hero photograph at `/twin-base/assets/hero-dogs.jpg`. HEIC was converted to a web JPEG, oriented and resized without changing its content. The portrait frame uses `object-fit: contain`, preserving both dogs and the full composition. The hero has a static `src` so it also works without JavaScript.
 
-The page currently has **explicit temporary photo placeholders** and a typographic brand fallback. It is not claimed to satisfy the specification's image-delivery requirement until these files are supplied:
+The user’s second inline photograph (container facility and corgi) is requested for the “気ままに、のびのび。人工芝ドッグラン” feature. Its original bytes are not available in the workspace; a downloadable JPG/PNG has been requested. That feature and the terrace still retain photo placeholders pending delivery. No substitute was fabricated.
 
-1. Original TWIN BASE logo PNG/JPEG. Remove only its circular background, preserve the dog/fence/grass/lettering/colors, save tightly cropped transparent PNG as `/twin-base/assets/logo.png`.
-2. Original facility photograph PNG/JPEG. Preserve its composition and dog, optimise without redesigning the photograph, save `/twin-base/assets/facility.webp` (or JPG).
+The original logo file also remains pending; the typographic brand fallback is retained. Once supplied, remove only the circular logo background and preserve the original drawing and lettering.
 
-Set paths in `public/twin-base/settings.js`:
-
-```js
-logoPath:'/twin-base/assets/logo.png',
-facilityPhotoPath:'/twin-base/assets/facility.webp'
-```
-
-The hero uses the entire image with `object-fit: contain` inside an organic frame, preserving the dog. Other image slots also use `contain`. Failed/unset image paths keep the clearly labelled placeholder and cause no broken-image icon. Configured images replace placeholders only after successful loading.
+Configure `heroPhotoPath`, `facilityPhotoPath` and `logoPath` in `public/twin-base/settings.js`. The facility setting is independent of the hero so the two requested images will not overwrite one another. Failed/unset images retain their placeholders.
 
 ## Confirmed social URLs
 
