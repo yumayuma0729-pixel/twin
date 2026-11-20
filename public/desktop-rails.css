@@ -134,3 +134,12 @@ footer .logo .brand-wordmark{width:170px}
 .inventory-order>.order-sales-copy{max-width:270px;color:#d4d4d4}
 @media(min-width:1600px){.has-desktop-rails header nav{gap:12px;font-size:12px;white-space:nowrap}.has-desktop-rails header{gap:20px}}
 @media(max-width:767px){.inventory-order>.order-sales-copy{max-width:none}.order-sales-copy{font-size:13px}}
+
+/* Shared phone CTA: emergency and general reception are distinct. */
+.floating-contact>a.contact-phone{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:58px;padding:10px 15px;border-radius:9px;text-align:left;text-decoration:none}
+.rail-contact-actions>a.rail-phone{display:flex;align-items:center;gap:12px;min-height:82px;padding:13px;border-radius:5px;text-decoration:none}
+.rail-contact-actions>a.rail-phone>span:last-child{margin-left:auto;font-size:20px}
+.phone-hours>span{display:block;white-space:nowrap}
+.rail-phone .phone-hours{font-size:10px;line-height:1.8;margin-top:5px;letter-spacing:0}
+.floating-contact .phone-hours{font-size:10px;line-height:1.7;margin-top:3px;letter-spacing:0}
+@media(max-width:767px){.floating-contact>a.contact-phone,.road-detail-road-assistance .floating-contact>a.contact-phone{justify-content:center;min-height:65px;padding:8px 6px;gap:0}.floating-contact .contact-phone>.contact-symbol,.floating-contact .contact-phone>span:last-child{display:none}.floating-contact .contact-phone strong{font-size:13px}.floating-contact .phone-hours{font-size:10px;line-height:1.6}}
