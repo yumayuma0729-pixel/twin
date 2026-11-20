@@ -143,3 +143,9 @@ footer .logo .brand-wordmark{width:170px}
 .rail-phone .phone-hours{font-size:10px;line-height:1.8;margin-top:5px;letter-spacing:0}
 .floating-contact .phone-hours{font-size:10px;line-height:1.7;margin-top:3px;letter-spacing:0}
 @media(max-width:767px){.floating-contact>a.contact-phone,.road-detail-road-assistance .floating-contact>a.contact-phone{justify-content:center;min-height:65px;padding:8px 6px;gap:0}.floating-contact .contact-phone>.contact-symbol,.floating-contact .contact-phone>span:last-child{display:none}.floating-contact .contact-phone strong{font-size:13px}.floating-contact .phone-hours{font-size:10px;line-height:1.6}}
+
+/* Business-specific telephone reception, independent of 24-hour roadside response. */
+.rail-contact-actions>a.rail-phone{gap:8px}
+.rail-phone>.rail-channel-icon{width:20px;font-size:20px}
+.rail-phone>span:last-child{display:none}
+.phone-hours{font-weight:400}
